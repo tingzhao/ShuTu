@@ -1,0 +1,14 @@
+K 10
+svn:ignore
+V 94
+generator
+mrc2tiff
+tiff.image.c
+tiff.io.c
+tiffconvert
+tiffRGB
+tiffshow
+tifftagger
+utilities.c
+
+END

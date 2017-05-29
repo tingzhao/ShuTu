@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "Copying files to ~/NeuTuRelease ..."
+cp libNeuTu.so  NeuTuAutoTrace  NeuTu.Parameters.dat NeuTu.py ~/NeuTuRelease/

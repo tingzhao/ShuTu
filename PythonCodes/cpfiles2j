@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "copying .c .h .py .dat files to Janelia server..."
+
+rsync -av *.c jind@10.102.20.173:/groups/spruston/home/jind/NeuTu/PythonCode/
+rsync -av *.h jind@10.102.20.173:/groups/spruston/home/jind/NeuTu/PythonCode/
+rsync -av *.py jind@10.102.20.173:/groups/spruston/home/jind/NeuTu/PythonCode/
+rsync -av *.dat jind@10.102.20.173:/groups/spruston/home/jind/NeuTu/PythonCode/

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/ScientificComputing/Projects/!svn/ver/10070/NeuronSeparator/trunk/mylib/MY_FFT
+END
+fft.D.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/fft.D.c
+END
+fft.F.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/fft.F.c
+END
+myfft.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/myfft.c
+END
+fft.D.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/fft.D.h
+END
+fft.F.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/fft.F.h
+END
+test.norm.D.c
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/test.norm.D.c
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/ScientificComputing/Projects/!svn/ver/8936/NeuronSeparator/trunk/mylib/MY_FFT/CMakeLists.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/ScientificComputing/Projects/!svn/ver/10070/NeuronSeparator/trunk/mylib/MY_FFT/Makefile
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/README
+END
+test.fft.c
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/test.fft.c
+END
+test.norm.F.c
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/ScientificComputing/Projects/!svn/ver/8931/NeuronSeparator/trunk/mylib/MY_FFT/test.norm.F.c
+END
