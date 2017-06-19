@@ -18,23 +18,33 @@ then
   do
     echo "*   $package"
   done
-  echo "Please use easy_install or pip to install them and then try agin."
-  exit 1
+  #echo "Please use easy_install or pip to install them and then try agin."
+  echo "Installing now ..."
+  set -e
+  easy_install $package
+  set +e
 fi
 
 echo "Checking building tools ..."
 command -v gcc 2> /dev/null
 if [ $? -ne 0 ]
 then
-  echo "ERROR: gcc is missing. Please install build-essential"
-  exit 1
+  #echo "ERROR: gcc is missing. Please install build-essential"
+  #exit 1
+  set -e
+  apt-get install build-essential
+  set +e
 fi
 
 command -v mpirun mpicc 2> /dev/null
 if [ $? -ne 0 ]
 then
-  echo "ERROR: OpenMPI is missing. Please install openmpi-bin and libopenmpi-dev."
-  exit 1
+  #echo "ERROR: OpenMPI is missing. Please install openmpi-bin and libopenmpi-dev."
+  #exit 1
+  set -e
+  apt-get install openmpi-bin
+  apt-get install libopenmpi-dev
+  set +e
 fi
 
 
