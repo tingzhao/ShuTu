@@ -1,12 +1,15 @@
 #!/bin/bash
-if [ `uname` == 'Darwin' ]; then
-  scriptDir=$(cd $(dirname "$0") && pwd -P)
-else
-  scriptDir=$(dirname `readlink -f "$0"`)
+
+scriptDir=$(cd $(dirname "$0") && pwd -P)
+
+condaDir=$scriptDir/miniconda
+if [ ! -d $condaDir ]
+then
+  curl -X GET https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh > Miniconda-latest-MacOSX-x86_64.sh
+  bash Miniconda-latest-MacOSX-x86_64.sh -b -p $condaDir
 fi
-
-
-
+source $condaDir/bin/activate root
+ 
 #Checking python packages
 echo "Checking python packages ..."
 while read package
@@ -27,22 +30,9 @@ then
     #echo "Please use easy_install or pip to install them and then try agin."
     echo "Installing now ..."
     set -e
-    easy_install $package
+    conda install $package -y
     set +e
   done
-fi
-
-echo "Checking building tools ..."
-if [ `uname` == 'Darwin' ]; then
-  command -v gcc 2> /dev/null
-  if [ $? -ne 0 ]
-  then
-    #echo "ERROR: gcc is missing. Please install build-essential"
-    #exit 1
-    set -e
-    apt-get install build-essential
-    set +e
-  fi
 fi
 
 command -v mpirun mpicc 2> /dev/null
@@ -51,8 +41,7 @@ then
   #echo "ERROR: OpenMPI is missing. Please install openmpi-bin and libopenmpi-dev."
   #exit 1
   set -e
-  pip install openmpi-bin
-  pip install libopenmpi-dev
+  conda install -c mpi4py openmpi=2.0.2 -y
   set +e
 fi
 
