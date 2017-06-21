@@ -1,4 +1,9 @@
-scriptDir=$(dirname `readlink -f "$0"`)
+#!/bin/bash
+if [ `uname` == 'Darwin' ]; then
+  scriptDir=$(cd $(dirname "$0") && pwd -P)
+else
+  scriptDir=$(dirname `readlink -f "$0"`)
+fi
 
 #Checking python packages
 echo "Checking python packages ..."
@@ -26,14 +31,16 @@ then
 fi
 
 echo "Checking building tools ..."
-command -v gcc 2> /dev/null
-if [ $? -ne 0 ]
-then
-  #echo "ERROR: gcc is missing. Please install build-essential"
-  #exit 1
-  set -e
-  apt-get install build-essential
-  set +e
+if [ `uname` == 'Darwin' ]; then
+  command -v gcc 2> /dev/null
+  if [ $? -ne 0 ]
+  then
+    #echo "ERROR: gcc is missing. Please install build-essential"
+    #exit 1
+    set -e
+    apt-get install build-essential
+    set +e
+  fi
 fi
 
 command -v mpirun mpicc 2> /dev/null
@@ -42,8 +49,8 @@ then
   #echo "ERROR: OpenMPI is missing. Please install openmpi-bin and libopenmpi-dev."
   #exit 1
   set -e
-  apt-get install openmpi-bin
-  apt-get install libopenmpi-dev
+  pip install openmpi-bin
+  pip install libopenmpi-dev
   set +e
 fi
 
