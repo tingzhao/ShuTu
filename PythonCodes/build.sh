@@ -1,10 +1,10 @@
 #!/bin/bash
 if [ `uname` == 'Darwin' ]; then
-  scriptDir=$(cd $(dirname "$0") && pwd -P)
-else
-  scriptDir=$(dirname `readlink -f "$0"`)
+  sh build_mac.sh
+  exit
 fi
 
+scriptDir=$(dirname `readlink -f "$0"`)
 
 
 #Checking python packages
