@@ -1,5 +1,6 @@
 HEADERS = -Imylib
 LIBS =  -Lmylib -lmylib -lm
+RPATH = -Wl,-rpath,miniconda/lib
 
 all: libShuTu.so ShuTuAutoTraceOneStack ShuTuAutoTrace
 
@@ -11,16 +12,19 @@ libShuTu.o: libShuTu.c libShuTu.h
 
 ShuTuAutoTraceOneStack: ShuTuAutoTraceOneStack.c libShuTu.o
 	gcc -fPIC -c ShuTuAutoTraceOneStack.c $(HEADERS)
-	gcc -o ShuTuAutoTraceOneStack ShuTuAutoTraceOneStack.o libShuTu.o $(LIBS)
+	gcc $(RPATH) -o ShuTuAutoTraceOneStack ShuTuAutoTraceOneStack.o libShuTu.o $(LIBS)
 
 ShuTuAutoTrace: ShuTuAutoTrace.c libShuTu.o
 	mpicc -fPIC -c ShuTuAutoTrace.c $(HEADERS)
-	mpicc -o ShuTuAutoTrace ShuTuAutoTrace.o libShuTu.o $(LIBS)
+	mpicc $(RPATH) -o ShuTuAutoTrace ShuTuAutoTrace.o libShuTu.o $(LIBS)
 
 test: test.c libShuTu.o
 	gcc -fPIC -c test.c $(HEADERS)
-	gcc -o test test.o libNeuTu.o $(LIBS)
+	gcc $(RPATH) -o test test.o libNeuTu.o $(LIBS)
 
 clean:
 	rm -f *.o
 	rm -f *.so
+	rm -f ShuTuAutoTraceOneStack
+	rm -f ShuTuAutoTrace
+	rm -f test

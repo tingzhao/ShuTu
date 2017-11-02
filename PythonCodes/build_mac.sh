@@ -35,15 +35,15 @@ then
   done
 fi
 
-command -v mpirun mpicc 2> /dev/null
-if [ $? -ne 0 ]
-then
+#command -v mpirun mpicc 2> /dev/null
+#if [ $? -ne 0 ]
+#then
   #echo "ERROR: OpenMPI is missing. Please install openmpi-bin and libopenmpi-dev."
   #exit 1
-  set -e
-  conda install -c mpi4py openmpi=2.0.2 -y
-  set +e
-fi
+set -e
+conda install -c mpi4py openmpi=2.0.2 -y
+set +e
+#fi
 
 
 echo "Building mylib ..."
