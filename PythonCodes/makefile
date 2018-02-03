@@ -15,8 +15,8 @@ ShuTuAutoTraceOneStack: ShuTuAutoTraceOneStack.c libShuTu.o
 	gcc $(RPATH) -o ShuTuAutoTraceOneStack ShuTuAutoTraceOneStack.o libShuTu.o $(LIBS)
 
 ShuTuAutoTrace: ShuTuAutoTrace.c libShuTu.o
-	mpicc -fPIC -c ShuTuAutoTrace.c $(HEADERS)
-	mpicc $(RPATH) -o ShuTuAutoTrace ShuTuAutoTrace.o libShuTu.o $(LIBS)
+	miniconda/bin/mpicc -fPIC -c ShuTuAutoTrace.c $(HEADERS)
+	miniconda/bin/mpicc $(RPATH) -o ShuTuAutoTrace ShuTuAutoTrace.o libShuTu.o $(LIBS)
 
 test: test.c libShuTu.o
 	gcc -fPIC -c test.c $(HEADERS)

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e 
+
+if [ $# -lt 3 ]
+then
+  echo "Invalid input: At least three arugments required."
+  echo ""
+  echo "Usage: trace <data_dir> <output_prefix> <parameter_file> [<cpu_count>]"
+  echo "  <data_dir>: data directory"
+  echo "  <output_prefix>: common prefix for output"
+  echo "  <parameter_file>: parameter file"
+  echo "  <cpu_count>: number of CPUs for tracing (optional; default is 4)"
+  echo ""
+  exit 1
+fi
+
+dataDir=$1
+commonName=$2
+paraFile=$3
+cpuCount=4
+if [ $# -ge 4 ]
+then
+  cpuCount=$4
+fi
+
+echo "Start auto tracing for $dataDir ..."
+echo "Using $cpuCount CPUs ..."
+
+source miniconda/bin/activate root
+
+echo "Preparing tiff files ..."
+python createTiffStacksZeiss.py $dataDir $commonName
+
+echo "Processing images ..."
+python processImages.py $dataDir
+
+echo "Stitching images ..."
+python  stitchTilesZeissXML.py $dataDir
+
+echo "Tracing ..."
+mpirun -n $cpuCount ./ShuTuAutoTrace $dataDir $paraFile
+
+echo "Done! Now you start editing the result in ShuTu GUI."
+
+ 
