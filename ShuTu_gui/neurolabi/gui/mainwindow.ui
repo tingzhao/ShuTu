@@ -58,7 +58,6 @@
      <property name="title">
       <string>Expand current</string>
      </property>
-     <addaction name="actionAddSWC"/>
      <addaction name="actionAddMask"/>
      <addaction name="actionAddNeuron_Network"/>
      <addaction name="actionTracing_result"/>
@@ -92,6 +91,7 @@
     <addaction name="actionTiles"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionAddSWC"/>
     <addaction name="menuOpen_Recent"/>
     <addaction name="menuLoad_into"/>
     <addaction name="menuTrace_Project"/>
@@ -174,8 +174,6 @@
      <addaction name="actionBinarize"/>
      <addaction name="actionUpdate"/>
      <addaction name="actionExtract_Channel"/>
-     <addaction name="actionInvert"/>
-     <addaction name="actionMake_Projection"/>
      <addaction name="actionSubtract_Background"/>
      <addaction name="actionUp_Down_Flip"/>
      <addaction name="menuFilter"/>
@@ -196,7 +194,6 @@
      <addaction name="actionTree_Preview"/>
      <addaction name="separator"/>
      <addaction name="actionBinary_SWC"/>
-     <addaction name="actionMask_SWC"/>
     </widget>
     <widget class="QMenu" name="menuTube">
      <property name="title">
@@ -236,8 +233,11 @@
      <addaction name="actionSeed_Mask"/>
      <addaction name="actionSWC_Edit_Stat"/>
     </widget>
-    <addaction name="menuProcess"/>
+    <addaction name="actionInvert"/>
+    <addaction name="actionMake_Projection"/>
+    <addaction name="actionMask_SWC"/>
     <addaction name="menuTrace"/>
+    <addaction name="menuProcess"/>
     <addaction name="menuTube"/>
     <addaction name="menuPuncta"/>
     <addaction name="menuSwc"/>
@@ -868,7 +868,7 @@
   </action>
   <action name="actionAddSWC">
    <property name="text">
-    <string>SWC</string>
+    <string>Load SWC</string>
    </property>
   </action>
   <action name="actionAddNeuron_Network">

@@ -37,12 +37,12 @@ private slots:
     void on_actionTurnOffSWC_triggered();
     void keyPressEvent(QKeyEvent *event);
     void showSwc(bool on);
+    void updateView();
 
 private:
     void init();
     void createMenu();
     void connectSignalSlot();
-    void updateView();
     void zoom(int ds);
 
 private:

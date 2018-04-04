@@ -889,7 +889,7 @@ void MainWindow::customizeActions()
 
     if (config.getApplication() == "Biocytin") {
       m_ui->menuBiocytin->menuAction()->setVisible(true);
-      hasApplication = true;
+      hasApplication = false;
     } else {
       m_ui->menuBiocytin->menuAction()->setVisible(false);
     }
@@ -961,6 +961,8 @@ void MainWindow::customizeActions()
 
 void MainWindow::createMenus()
 {
+  m_ui->actionNewProject->setVisible(false);
+
   //the menu bar is created the first time menuBar is called
   exportMenu = m_ui->menuFile->addMenu(tr("&Export"));
   exportMenu->addAction(bnExportAction);
@@ -1022,6 +1024,12 @@ void MainWindow::createMenus()
   m_ui->menuHelp->addAction(testAction);
 //#endif
 
+  m_ui->menuFile->removeAction(m_ui->menuLoad_into->menuAction());
+  m_ui->menuApplications->addMenu(m_ui->menuLoad_into);
+
+  m_ui->menuImport->hide();
+  m_ui->menuTrace->hide();
+  m_ui->menuApplications->hide();
 /*
 #if defined(_FLYEM_)
   m_ui->menuFLy_EM->setEnabled(true);
@@ -1080,7 +1088,7 @@ void MainWindow::createToolBars()
   //m_ui->toolBar->addAction(m_ui->actionAutomatic);
 
   m_ui->toolBar->addAction(m_ui->actionMake_Projection);
-  m_ui->toolBar->addAction(m_ui->actionMask);
+//  m_ui->toolBar->addAction(m_ui->actionMask);
   m_ui->toolBar->addAction(m_ui->actionMask_SWC);
 
   m_ui->toolBar->addSeparator();
@@ -1118,7 +1126,7 @@ void MainWindow::createStatusBar()
 void MainWindow::updateStatusBar()
 {
   if (frameNumber() == 0) {
-    statusBar()->showMessage(tr("Load a stack to start"));
+    statusBar()->showMessage(tr("Open a project to start"));
   } else {
     ZStackFrame *frame = activeStackFrame();
     if (frame != NULL) {

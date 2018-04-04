@@ -1420,6 +1420,7 @@ void ZStackFrame::invertStack()
 {
   if (m_doc->hasStackData()) {
     m_doc->invert();
+    autoBcAdjust();
   }
 }
 
