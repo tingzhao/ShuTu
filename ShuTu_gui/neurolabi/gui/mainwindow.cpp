@@ -825,6 +825,8 @@ void MainWindow::setActionActivity()
   m_stackActionActivator.registerAction(m_ui->actionExtract_Channel, true);
   m_stackActionActivator.registerAction(m_ui->actionBinary_SWC, true);
   m_stackActionActivator.registerAction(m_ui->actionUpdate, true);
+  m_stackActionActivator.registerAction(m_ui->actionUp_Down_Flip, true);
+  m_stackActionActivator.registerAction(m_ui->actionSubtract_Background, true);
 
   m_stackActionActivator.registerAction(m_ui->menuFilter->menuAction(), true);
   m_stackActionActivator.registerAction(m_ui->menuBinary_Morphology->menuAction(), true);
@@ -833,6 +835,7 @@ void MainWindow::setActionActivity()
 
   m_swcActionActivator.registerAction(m_ui->actionSWC_Rescaling, true);
   m_swcActionActivator.registerAction(m_ui->actionRescale_Swc, true);
+  m_swcActionActivator.registerAction(m_ui->actionSave_SWC, true);
 }
 
 void MainWindow::customizeActions()
@@ -1027,8 +1030,8 @@ void MainWindow::createMenus()
   m_ui->menuFile->removeAction(m_ui->menuLoad_into->menuAction());
   m_ui->menuApplications->addMenu(m_ui->menuLoad_into);
 
-  m_ui->menuImport->hide();
-  m_ui->menuTrace->hide();
+  m_ui->menuImport->menuAction()->setVisible(false);
+  m_ui->menuTrace->menuAction()->setVisible(false);
   m_ui->menuApplications->hide();
 /*
 #if defined(_FLYEM_)
@@ -1300,6 +1303,8 @@ void MainWindow::enableStackActions(bool b)
   m_ui->actionInvert->setEnabled(b);
   m_ui->actionExtract_Channel->setEnabled(b);
   m_ui->actionBinary_SWC->setEnabled(b);
+  m_ui->actionUp_Down_Flip->setEnabled(b);
+  m_ui->actionSubtract_Background->setEnabled(b);
 }
 
 void MainWindow::report(const std::string &title, const std::string &msg,
