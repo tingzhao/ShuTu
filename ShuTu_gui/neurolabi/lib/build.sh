@@ -1,5 +1,20 @@
 #!/bin/bash
 
+set -e
+
+symlink_to_conda() {
+  PKG_NAME=$1
+  LIB_NAME=$2
+  if [ ! -z "${CONDA_ENV}" ] && [ -f "${CONDA_ENV}/lib/${LIB_NAME}" ]; then
+    echo "Creating conda symlinks for $PKG_NAME"
+    mkdir -p $PKG_NAME
+    cd $PKG_NAME
+    ln -s -f "${CONDA_ENV}/include"
+    ln -s -f "${CONDA_ENV}/lib"
+    cd -
+  fi
+}
+
 uncompress_lib () {
   if [ ! -f $1.tar ]
   then
@@ -10,6 +25,11 @@ uncompress_lib () {
 
 libdir=`pwd`
 export CFLAGS="-fPIC"
+
+symlink_to_conda fftw3 libfftw3.a
+symlink_to_conda jansson libjansson.a
+symlink_to_conda xml libxml2.a
+symlink_to_conda hdf5 libhdf5.a
 
 if [ ! -f fftw3/lib/libfftw3.a ]
 then
@@ -65,6 +85,7 @@ fi
 use_png=0
 if [ $use_png -ne 0 ]
 then
+  symlink_to_conda png libpng.a
   if [ ! -f png/lib/libpng.a ]
   then
     echo 'Building libpng ...'
