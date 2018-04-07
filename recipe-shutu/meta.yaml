@@ -31,20 +31,19 @@ requirements:
     - libpng  1.6*
     - hdf5    1.8*
     - pango   1.40* # [linux64]
-    - cmake
     - ninja
+    - libxml2
     - libiconv >=1.15
 
   run:
-    - python >=3.6
     - qt      5*
     - fftw    3.3*
     - jansson 2.7
     - libpng  1.6*
     - hdf5    1.8*
     - pango   1.40* # [linux64]
-    - cmake
     - ninja
+    - libxml2
     - libiconv >=1.15
    
 about:
