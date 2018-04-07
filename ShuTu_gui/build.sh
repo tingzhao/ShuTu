@@ -130,9 +130,15 @@ $QMAKE $qmake_args
 make -j3
 
 bin_dir=.
-if [ -d $bin_dir/neuTube.app ]
+app_name=ShuTu
+if [ $debug_config = "debug" ]
 then
-  bin_dir=$bin_dir/neuTube.app/Contents/MacOS
+  app_name=${app_name}_d
+fi
+
+if [ -d $bin_dir/${app_name}.app ]
+then
+  bin_dir=$bin_dir/${app_name}.app/Contents/MacOS
 fi
 
 if [ ! -d $bin_dir/doc ]
