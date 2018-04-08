@@ -11,11 +11,7 @@ fi
 
 export CONDA_ENV=${PREFIX}
 
-app_name=${NEUTU_TARGET:-ShuTu}
-if [ ${NEUTU_TARGET} == 'shutu-debug' ]
-then
-  app_name=ShuTu_d
-fi
+app_name=ShuTu
 
 cd ShuTu_gui
 build_dir=neurolabi/build
