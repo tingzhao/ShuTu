@@ -36,5 +36,4 @@ else
     mv ${build_dir}/${app_name} ${PREFIX}/bin/
     mv ${build_dir}/config.xml ${PREFIX}/bin/
     mv ${build_dir}/doc ${PREFIX}/bin/
-    mv ${build_dir}/json ${PREFIX}/bin/
 fi
