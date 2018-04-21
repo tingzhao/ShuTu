@@ -2634,12 +2634,15 @@ void Z3DWindow::keyPressEvent(QKeyEvent *event)
       m_doc->saveSwc(this);
     } else if (event->modifiers() == Qt::NoModifier) {
       keyMode = ZInteractionEngine::KM_SWC_SELECTION;
+
+      /*
       notifyUser("Selection mode on:"
                  "1: downstream;"
                  "2: upstream;"
                  "3: connected nodes;"
                  "4: inverse selection;"
                  "5: select small trees;");
+                 */
     }
     break;
   case Qt::Key_I:
@@ -2773,16 +2776,30 @@ void Z3DWindow::keyPressEvent(QKeyEvent *event)
   case Qt::Key_3:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
         ZInteractionEngine::KM_SWC_SELECTION) {
-      m_doc->selectConnectedNode();
+//      m_doc->selectConnectedNode();
+      m_doc->selectNeighborSwcNode();
     }
     break;
   case Qt::Key_4:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
         ZInteractionEngine::KM_SWC_SELECTION) {
-      m_doc->inverseSwcNodeSelection();
+      m_doc->selectBranchNode();
+//      m_doc->inverseSwcNodeSelection();
     }
     break;
   case Qt::Key_5:
+    if (getCanvas()->getInteractionEngine()->getKeyMode() ==
+        ZInteractionEngine::KM_SWC_SELECTION) {
+      m_doc->selectConnectedNode();
+    }
+    break;
+  case Qt::Key_6:
+    if (getCanvas()->getInteractionEngine()->getKeyMode() ==
+        ZInteractionEngine::KM_SWC_SELECTION) {
+      m_doc->inverseSwcNodeSelection();
+    }
+    break;
+  case Qt::Key_7:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
         ZInteractionEngine::KM_SWC_SELECTION) {
       if (m_swcIsolationDlg->exec()) {
@@ -2796,6 +2813,8 @@ void Z3DWindow::keyPressEvent(QKeyEvent *event)
   }
 
   getCanvas()->setKeyMode(keyMode);
+
+//  getCanvas()->viewport()->update();
 }
 
 QTabWidget *Z3DWindow::createBasicSettingTabWidget()

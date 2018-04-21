@@ -870,6 +870,9 @@
    <property name="text">
     <string>Load SWC</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
   </action>
   <action name="actionAddNeuron_Network">
    <property name="text">
@@ -1277,6 +1280,9 @@
   <action name="actionTiles">
    <property name="text">
     <string>Open Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionLoad_Large_Body">

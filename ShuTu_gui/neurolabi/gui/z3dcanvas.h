@@ -124,6 +124,10 @@ signals:
 protected:
   double getDevicePixelRatio();
 
+  void drawText(QPainter &painter, const QString &text);
+  void drawText(QPainter &painter, const QStringList &text);
+
+protected:
   bool m_fullscreen;
 
 #ifdef _QT5_

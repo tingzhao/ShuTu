@@ -753,7 +753,7 @@ void MainWindow::createActions()
 
 //#ifdef _DEBUG_
   testAction = new QAction(tr("&Test"), this);
-  testAction->setShortcut(tr("Ctrl+T"));
+//  testAction->setShortcut(tr("Ctrl+T"));
   testAction->setStatusTip(tr("Test"));
   testAction->setIcon(QIcon(":/images/test.png"));
   connect(testAction, SIGNAL(triggered()), this, SLOT(test()));
