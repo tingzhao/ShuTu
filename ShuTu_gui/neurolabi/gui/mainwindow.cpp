@@ -2201,16 +2201,13 @@ void MainWindow::about()
                      "<p>" + GET_SOFTWARE_NAME.c_str() +" is software "
                      "for neuron reconstruction and visualization. "
 #if !defined(_FLYEM_)
-                     "It was originally developed by Ting Zhao "
-                     "in Myers Lab "
-                     "at Howard Hughes Medical Institute.</p>"
+                     "The GUI program is built upon neuTube (https://github.com/janelia-flyem/NeuTu) "
+                     "with signficant updates for bright-field microscope images.</p>"
                      "<p>Current developers: </p>"
                      "<ul>"
                      "<li>Ting Zhao</li>"
-                     "<p>Howard Hughes Medical Institute, Janelia Farm Research Campus, "
+                     "<p>Howard Hughes Medical Institute, Janelia Research Campus, "
                      "Ashburn, VA 20147</p>"
-                     "<li>Linqing Feng</li>"
-                     "<p>Center for Functional Connectomics, KIST, Korea</p>"
                      "<li>Dezhe Jin, Pennsylvania State University</li>"
                      "<p></p>"
                      "</ul>"
@@ -2222,8 +2219,8 @@ void MainWindow::about()
                      "<p>For any regarded question or feedback, please mail to "
                      "<a href=mailto:tingzhao@gmail.com>tingzhao@gmail.com</a></p>"
                      "<p>Source code: "
-                     "<a href=\"https://github.com/janelia-flyem/NeuTu\">"
-                     "https://github.com/janelia-flyem/NeuTu</a></p>" + thirdPartyLib
+                     "<a href=\"https://github.com/tingzhao/ShuTu\">"
+                     "https://github.com/tingzhao/ShuTu</a></p>" + thirdPartyLib
                      );
 }
 
