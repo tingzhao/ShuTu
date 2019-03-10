@@ -36,6 +36,7 @@ public slots:
       double theta, double psi, bool aroundCenter);
   virtual bool executeTranslateSelectedSwcNode();
   virtual bool executeDeleteSwcNodeCommand();
+  virtual bool executeDeleteUnselectedSwcNodeCommand();
   virtual bool executeConnectSwcNodeCommand();
   virtual bool executeChangeSelectedSwcNodeSize();
   virtual bool executeConnectSwcNodeCommand(Swc_Tree_Node *tn);

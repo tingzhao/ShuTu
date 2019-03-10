@@ -10,7 +10,7 @@ public:
   ZBiocytinFileNameParser();
 
   enum ESuffixRole {
-    EDIT, PROJECTION, MASK, ROI, ORIGINAL
+    EDIT, PROJECTION, MASK, ROI, TILES, ORIGINAL
   };
 
   static std::string getCorePath(const std::string &path);

@@ -394,6 +394,11 @@ ZStackOperator ZMouseEventLeftButtonPressMapper::getOperation(
     case ZInteractiveContext::INTERACT_RECT_DRAW:
       op.setOperation(ZStackOperator::OP_RECT_ROI_INIT);
       break;
+    case ZInteractiveContext::INTERACT_FREE:
+      if (event.getModifiers() == Qt::ControlModifier) {
+        op.setOperation(ZStackOperator::OP_RECT_ROI_SELECT);
+      }
+      break;
     default:
       break;
     }

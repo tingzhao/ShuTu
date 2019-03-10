@@ -18,6 +18,7 @@ ZInteractiveContext::ZInteractiveContext()
   m_exitingEdit = false;
   m_blockingContextMenu = false;
   m_sliceAxis = NeuTube::Z_AXIS;
+  m_keyMode = KM_NORMAL;
 }
 
 

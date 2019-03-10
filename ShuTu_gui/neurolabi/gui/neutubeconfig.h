@@ -69,6 +69,14 @@ public:
     return m_isStereoOn;
   }
 
+  inline void setDefaultPenWidth(double w) {
+    m_defaultPenWidth = w;
+  }
+
+  inline double getDefaultPenWidth() const {
+    return m_defaultPenWidth;
+  }
+
 #ifdef _QT_GUI_USED_
   inline QSettings& getSettings() {
     return m_settings;
@@ -321,6 +329,8 @@ private:
   int m_autoSaveInterval;
   bool m_autoSaveEnabled;
   bool m_usingNativeDialog;
+
+  double m_defaultPenWidth;
 
 #if defined(_FLYEM_)
   ZFlyEmConfig m_flyemConfig;

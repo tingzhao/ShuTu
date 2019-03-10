@@ -21,6 +21,8 @@ void ZBiocytinProjectionDoc::setParentDoc(ZSharedPointer<ZStackDoc> parentDoc)
   connect(this, SIGNAL(zoomingToSelectedSwcNode()),
           m_parentDoc.get(), SIGNAL(zoomingToSelectedSwcNode()));
 
+  Q_ASSERT(m_parentDoc.get() != static_cast<ZStackDoc*>(this));
+
   connect(m_parentDoc.get(), SIGNAL(swcModified()),
           this, SLOT(updateSwc()));
   connect(this, SIGNAL(swcModified()),
@@ -57,10 +59,19 @@ void ZBiocytinProjectionDoc::selectSwcNode(const ZRect2d &roi)
 bool ZBiocytinProjectionDoc::executeDeleteSwcNodeCommand()
 {
   if (m_parentDoc.get() != NULL) {
-    return m_parentDoc->executeDeleteSwcNodeCommand();
+    return m_parentDoc->executeDeleteSwcNodeCommandInStackRange();
   }
 
   return ZStackDoc::executeDeleteSwcNodeCommand();
+}
+
+bool ZBiocytinProjectionDoc::executeDeleteUnselectedSwcNodeCommand()
+{
+  if (m_parentDoc.get() != NULL) {
+    return m_parentDoc->executeDeleteUnselectedSwcNodeCommand();
+  }
+
+  return ZStackDoc::executeDeleteUnselectedSwcNodeCommand();
 }
 
 bool ZBiocytinProjectionDoc::executeConnectSwcNodeCommand()

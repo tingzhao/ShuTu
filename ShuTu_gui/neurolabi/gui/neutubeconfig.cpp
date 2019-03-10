@@ -22,6 +22,7 @@ NeutubeConfig::NeutubeConfig() : m_segmentationClassifThreshold(0.5),
   ,m_settings(QSettings::UserScope, "NeuTu-be")
 #endif
 {
+  m_defaultPenWidth = 1.0;
   m_messageReporter = new ZLogMessageReporter;
   m_softwareName = "NeuTu";
 #ifdef _QT_GUI_USED_

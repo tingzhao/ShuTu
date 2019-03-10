@@ -180,6 +180,10 @@ public:
     m_hoverFocus = on;
   }
 
+  void setText(const QStringList &msg) {
+    m_text = msg;
+  }
+
 public:
   virtual void mouseReleaseEvent(QMouseEvent *event);
   virtual void mouseMoveEvent(QMouseEvent *event);
@@ -234,12 +238,16 @@ private:
   void paintObject();
   void paintZoomHint();
 
+//  static void drawText(QPainter &painter, const QStringList &text);
+//  static void drawText(QPainter &painter, const QString &text);
+
 private:
   ZImage *m_image;
   QVector<ZImage*> m_mask;
   ZPixmap *m_objectCanvas;
   ZPixmap *m_tileCanvas;
   ZPixmap *m_activeDecorationCanvas;
+  QStringList m_text;
 
   QRect m_viewPort; /* viewport, in world coordinates */
   QRectF m_projRegion; /* projection region */

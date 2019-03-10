@@ -187,11 +187,11 @@ public:
 
   bool isOpaque();
 
-  inline static void setDefaultPenWidth(double width) {
+  inline void setDefaultPenWidth(double width) {
       m_defaultPenWidth = width;
   }
 
-  inline static double getDefaultPenWidth() {
+  inline double getDefaultPenWidth() const {
     return m_defaultPenWidth;
   }
 
@@ -343,7 +343,7 @@ protected:
   EDisplayStyle m_style;
   QColor m_color;
   ETarget m_target;
-  static double m_defaultPenWidth;
+  double m_defaultPenWidth;
   bool m_usingCosmeticPen;
   double m_zScale;
   std::string m_source;

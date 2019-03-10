@@ -208,9 +208,12 @@ void Z3DCanvas::drawBackground(QPainter *painter, const QRectF &)
   painter->drawRect(QRect(10, 10, 40, 60));
 #endif
 
-#if 1
+  if (m_interaction.getKeyMode() == ZInteractiveContext::KM_SWC_SELECTION) {
+    ZPainter::DrawSwcSelectionText(*painter);
+  }
+#if 0
   QStringList text;
-  if (m_interaction.getKeyMode() == ZInteractionEngine::KM_SWC_SELECTION) {
+  if (m_interaction.getKeyMode() == ZInteractiveContext::KM_SWC_SELECTION) {
       text.append("Selection mode on:");
       text.append("  1: downstream;");
       text.append("  2: upstream;");
@@ -229,6 +232,7 @@ void Z3DCanvas::drawBackground(QPainter *painter, const QRectF &)
   CHECK_GL_ERROR;
 }
 
+#if 0
 void Z3DCanvas::drawText(QPainter &painter, const QStringList &text)
 {
   if (!text.empty()) {
@@ -271,6 +275,7 @@ void Z3DCanvas::drawText(QPainter &painter, const QString &text)
     drawText(painter, text);
   }
 }
+#endif
 
 void Z3DCanvas::timerEvent(QTimerEvent* e)
 {
@@ -328,7 +333,7 @@ void Z3DCanvas::broadcastEvent(QEvent *e, int w, int h)
   }
 }
 
-void Z3DCanvas::setKeyMode(ZInteractionEngine::EKeyMode mode)
+void Z3DCanvas::setKeyMode(ZInteractiveContext::EKeyMode mode)
 {
   m_interaction.setKeyMode(mode);
   viewport()->update();

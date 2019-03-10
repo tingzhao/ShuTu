@@ -14,7 +14,9 @@ const static ZBiocytinFileNameParser::TSuffixMap::value_type rawMap[] = {
   ZBiocytinFileNameParser::TSuffixMap::value_type(
   ZBiocytinFileNameParser::MASK, ".Mask"),
   ZBiocytinFileNameParser::TSuffixMap::value_type(
-  ZBiocytinFileNameParser::ROI, ".Roi")
+  ZBiocytinFileNameParser::ROI, ".Roi"),
+  ZBiocytinFileNameParser::TSuffixMap::value_type(
+  ZBiocytinFileNameParser::TILES, ".tiles")
 };
 
 const int MapEntryCount = sizeof(rawMap) / sizeof(rawMap[0]);

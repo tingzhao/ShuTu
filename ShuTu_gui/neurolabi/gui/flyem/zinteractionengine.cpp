@@ -10,10 +10,12 @@ ZInteractionEngine::ZInteractionEngine(QObject *parent) :
   m_stroke.setWidth(10.0);
   m_namedDecorationList.append(&m_stroke);
   m_rect.setColor(255, 0, 0, 128);
+  m_rect.setDefaultPenWidth(2);
+  m_rect.useCosmeticPen(true);
   m_namedDecorationList.append(&m_rect);
   m_previousKey = Qt::Key_unknown;
   m_previousKeyModifiers = Qt::NoModifier;
-  m_keyMode = KM_NORMAL;
+  m_keyMode = ZInteractiveContext::KM_NORMAL;
 }
 
 ZInteractionEngine::~ZInteractionEngine()
@@ -68,6 +70,11 @@ void ZInteractionEngine::processMouseReleaseEvent(
     } else if (isStateOn(STATE_DRAW_RECT)) {
       m_rect.makeValid();
       exitPaintRect();
+      if (isStateOn(STATE_SWC_RECT_SELECT)) {
+        m_interactiveContext.setSwcEditMode(
+              ZInteractiveContext::SWC_EDIT_SELECT);
+        emit selectingSwcNodeInRoi(true);
+      }
     }
     m_mouseLeftButtonPressed = false;
   } else if (event->button() == Qt::RightButton) {
@@ -114,6 +121,15 @@ void ZInteractionEngine::processMousePressEvent(QMouseEvent *event,
     if (isStateOn(STATE_DRAW_RECT)) {
       m_rect.setFirstCorner(event->x(), event->y());
       m_rect.setSize(0, 0);
+    } else if (m_interactiveContext.strokeEditMode() ==
+               ZInteractiveContext::STROKE_EDIT_OFF) {
+      if (event->modifiers() == Qt::ControlModifier) {
+        enterPaintRect();
+        m_interactiveContext.setSwcEditMode(
+              ZInteractiveContext::SWC_EDIT_SELECT_RECT);
+        m_rect.setFirstCorner(event->x(), event->y());
+        m_rect.setSize(0, 0);
+      }
     }
   } else if (event->button() == Qt::RightButton) {
     m_mouseRightButtonPressed = true;
@@ -220,7 +236,7 @@ bool ZInteractionEngine::processKeyPressEvent(QKeyEvent *event)
         emit selectingSwcNodeTreeInRoi(false);
       } else if (event->modifiers() == Qt::ControlModifier) {
         emit selectingTerminalBranchInRoi(false);
-      } else if (event->modifiers() == Qt::ControlModifier | Qt::ShiftModifier) {
+      } else if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier)) {
         emit selectingTerminalBranchInRoi(true);
       }
       processed = true;
@@ -312,6 +328,9 @@ bool ZInteractionEngine::isStateOn(EState status) const
   case STATE_DRAW_RECT:
     return m_interactiveContext.rectEditMode() ==
         ZInteractiveContext::RECT_DRAW;
+  case STATE_SWC_RECT_SELECT:
+    return m_interactiveContext.swcEditMode() ==
+        ZInteractiveContext::SWC_EDIT_SELECT_RECT;
   case STATE_LEFT_BUTTON_PRESSED:
     return m_mouseLeftButtonPressed;
   case STATE_RIGHT_BUTTON_PRESSED:
@@ -334,7 +353,7 @@ bool ZInteractionEngine::isStateOn(EState status) const
     return m_interactiveContext.swcEditMode() ==
         ZInteractiveContext::SWC_EDIT_ADD_NODE;
   case STATE_SWC_SELECTION:
-    return m_keyMode == KM_SWC_SELECTION;
+    return m_keyMode == ZInteractiveContext::KM_SWC_SELECTION;
   }
 
   return false;

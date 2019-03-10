@@ -14,7 +14,8 @@
 #include <QList>
 #include "zstroke2d.h"
 
-#  include "flyem/zinteractionengine.h"
+#include "zinteractivecontext.h"
+#include "flyem/zinteractionengine.h"
 
 class Z3DScene;
 class Z3DNetworkEvaluator;
@@ -97,7 +98,7 @@ public:
   bool processMouseMoveEventForPaint(QMouseEvent *e);
   bool suppressingContextMenu() const;
   void disableKeyEvent();
-  void setKeyMode(ZInteractionEngine::EKeyMode mode);
+  void setKeyMode(ZInteractiveContext::EKeyMode mode);
 
   void set3DInteractionHandler(Z3DTrackballInteractionHandler *handler);
 
@@ -124,8 +125,8 @@ signals:
 protected:
   double getDevicePixelRatio();
 
-  void drawText(QPainter &painter, const QString &text);
-  void drawText(QPainter &painter, const QStringList &text);
+//  void drawText(QPainter &painter, const QString &text);
+//  void drawText(QPainter &painter, const QStringList &text);
 
 protected:
   bool m_fullscreen;

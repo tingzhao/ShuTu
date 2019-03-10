@@ -248,9 +248,9 @@ MainWindow::MainWindow(QWidget *parent) :
   readSettings();
   setCurrentFile("");
 
-  if (GET_APPLICATION_NAME == "Biocytin") {
-    ZStackObject::setDefaultPenWidth(1.0);
-  }
+//  if (GET_APPLICATION_NAME == "Biocytin") {
+//    ZStackObject::setDefaultPenWidth(1.0);
+//  }
 
   setAcceptDrops(true);
 
@@ -395,7 +395,8 @@ void MainWindow::initDialog()
   m_penWidthDialog = new PenWidthDialog(this);
   m_resDlg = new ResolutionDialog(this);
 
-  m_penWidthDialog->setPenWidth(ZStackObject::getDefaultPenWidth());
+  m_penWidthDialog->setPenWidth(
+        NeutubeConfig::getInstance().getDefaultPenWidth());
 
   //m_dvidObjectDlg = new DvidObjectDialog(this);
   //m_dvidObjectDlg->setAddress(m_dvidClient->getDvidTarget().getDvid);
@@ -5429,11 +5430,12 @@ void MainWindow::on_actionDendrogram_triggered()
 void MainWindow::on_actionPen_Width_for_SWC_Display_triggered()
 {
   if (m_penWidthDialog->exec()) {
-    ZStackObject::setDefaultPenWidth(m_penWidthDialog->getPenWidth());
+    NeutubeConfig::getInstance().setDefaultPenWidth(m_penWidthDialog->getPenWidth());
     foreach (QMdiSubWindow *subwindow, mdiArea->subWindowList()) {
       ZStackFrame *frame = qobject_cast<ZStackFrame*>(subwindow);
       if (frame != NULL) {
-        frame->updateView();
+        frame->updateSwcPenWidth();
+//        frame->updateView();
       }
     }
   }
@@ -5864,6 +5866,7 @@ void MainWindow::on_actionTiles_triggered()
     }
 
     m_tileDlg->setDocument(frame->document());
+    frame->document()->setMainSource(fileName.toStdString());
     connect(frame, SIGNAL(closed(ZStackFrame*)),
             m_tileDlg, SLOT(closeProject()));
   }

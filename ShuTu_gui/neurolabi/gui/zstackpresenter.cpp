@@ -36,6 +36,7 @@
 #endif
 #include "zkeyoperationconfig.h"
 #include "zstackfactory.h"
+#include "dialogs/zswcisolationdialog.h"
 
 /*
 ZStackPresenter::ZStackPresenter(ZStackFrame *parent) : QObject(parent)
@@ -170,6 +171,8 @@ void ZStackPresenter::init()
 
   m_menuFactory = NULL;
   m_actionFactory = new ZActionFactory;
+
+  m_swcIsolationDlg = NULL;
 
   /*
   ZKeyOperationConfig::Configure(m_activeStrokeOperationMap,
@@ -1577,9 +1580,68 @@ bool ZStackPresenter::estimateActiveStrokeWidth()
   return succ;
 }
 
-bool ZStackPresenter::processKeyPressEvent(QKeyEvent *event)
+ZSwcIsolationDialog* ZStackPresenter::getSwcIsolationDlg()
 {
-  bool processed = true;
+  if (m_swcIsolationDlg == NULL) {
+    m_swcIsolationDlg = new ZSwcIsolationDialog(buddyView());
+  }
+
+  return m_swcIsolationDlg;
+}
+
+bool ZStackPresenter::processKeyPressEvent(QKeyEvent *event)
+{    
+  bool processed = false;
+
+  if (m_interactiveContext.getKeyMode() == ZInteractiveContext::KM_SWC_SELECTION) {
+  switch (event->key()) {
+  case Qt::Key_1:
+    buddyDocument()->selectDownstreamNode();
+    processed = true;
+    break;
+  case Qt::Key_2:
+    buddyDocument()->selectUpstreamNode();
+    processed = true;
+    break;
+  case Qt::Key_3:
+    buddyDocument()->selectNeighborSwcNode();
+    processed = true;
+    break;
+  case Qt::Key_4:
+    buddyDocument()->selectBranchNode();
+    processed = true;
+    break;
+  case Qt::Key_5:
+    buddyDocument()->selectConnectedNode();
+    processed = true;
+    break;
+  case Qt::Key_6:
+    buddyDocument()->inverseSwcNodeSelection();
+    processed = true;
+    break;
+  case Qt::Key_7:
+    if (getSwcIsolationDlg()->exec()) {
+      buddyDocument()->selectNoisyTrees(
+            getSwcIsolationDlg()->getLengthThreshold(),
+            getSwcIsolationDlg()->getDistanceThreshold());
+    }
+    processed = true;
+    break;
+  default:
+    break;
+  }
+
+  }
+
+  ZInteractiveContext::EKeyMode keyMode = ZInteractiveContext::KM_NORMAL;
+  m_interactiveContext.setKeyMode(keyMode);
+  buddyView()->updateViewText();
+  if (processed) {
+    return true;
+  } else {
+    processed = false;
+  }
+
 
   if (processKeyPressEventForActiveStroke(event)) {
     return processed;
@@ -1629,6 +1691,12 @@ bool ZStackPresenter::processKeyPressEvent(QKeyEvent *event)
       increaseZoomRatio();
     }
     break;
+  case Qt::Key_1:
+    if (m_interactiveContext.strokeEditMode() !=
+        ZInteractiveContext::STROKE_DRAW) {
+      decreaseZoomRatio();
+    }
+    break;
   case Qt::Key_2:
     if (m_interactiveContext.strokeEditMode() !=
         ZInteractiveContext::STROKE_DRAW) {
@@ -1638,12 +1706,6 @@ bool ZStackPresenter::processKeyPressEvent(QKeyEvent *event)
   case Qt::Key_Minus:
   case Qt::Key_Down:
     if (event->modifiers() == Qt::NoModifier) {
-      decreaseZoomRatio();
-    }
-    break;
-  case Qt::Key_1:
-    if (m_interactiveContext.strokeEditMode() !=
-        ZInteractiveContext::STROKE_DRAW) {
       decreaseZoomRatio();
     }
     break;
@@ -1775,6 +1837,35 @@ bool ZStackPresenter::processKeyPressEvent(QKeyEvent *event)
       }
     }
     break;
+  case Qt::Key_Exclam:
+    buddyDocument()->selectDownstreamNode();
+    break;
+  case Qt::Key_At:
+    buddyDocument()->selectUpstreamNode();
+    break;
+  case Qt::Key_NumberSign:
+    buddyDocument()->selectNeighborSwcNode();
+    break;
+  case Qt::Key_Dollar:
+    buddyDocument()->selectBranchNode();
+    break;
+  case Qt::Key_Percent:
+    buddyDocument()->selectConnectedNode();
+    break;
+  case Qt::Key_AsciiCircum:
+    buddyDocument()->inverseSwcNodeSelection();
+    break;
+  case Qt::Key_H:
+    if (event->modifiers() == Qt::NoModifier) {
+      keyMode = ZInteractiveContext::KM_SWC_SELECTION;
+    }
+    break;
+//  case Qt::Key_Ampersand:
+//    if (m_swcIsolationDlg->exec()) {
+//      buddyDocument()->selectNoisyTrees(m_swcIsolationDlg->getLengthThreshold(),
+//                                        m_swcIsolationDlg->getDistanceThreshold());
+//    }
+//    break;
     /*
   case Qt::Key_F:
     toggleObjectVisible();
@@ -1788,6 +1879,9 @@ bool ZStackPresenter::processKeyPressEvent(QKeyEvent *event)
   if (!processed) {
     processed = customKeyProcess(event);
   }
+
+  m_interactiveContext.setKeyMode(keyMode);
+//  buddyView()->updateViewText();
 
   return processed;
 }
@@ -2603,6 +2697,14 @@ void ZStackPresenter::selectConnectedNode()
 void ZStackPresenter::processRectRoiUpdate(ZRect2d *rect, bool appending)
 {
   buddyDocument()->processRectRoiUpdate(rect, appending);
+
+  if (m_interactiveContext.swcEditMode() == ZInteractiveContext::SWC_EDIT_SELECT_RECT) {
+    if (rect != NULL) {
+      buddyDocument()->selectSwcNode(*rect);
+      m_interactiveContext.setSwcEditMode(ZInteractiveContext::SWC_EDIT_SELECT);
+      buddyDocument()->removeObject(rect, true);
+    }
+  }
 }
 
 void ZStackPresenter::acceptRectRoi(bool appending)
@@ -3253,6 +3355,37 @@ void ZStackPresenter::process(ZStackOperator &op)
     buddyView()->paintActiveDecoration();
   }
     break;
+  case ZStackOperator::OP_RECT_ROI_SELECT:
+  {
+    ZRect2d *rect = new ZRect2d(currentStackPos.x(), currentStackPos.y(),
+                                0, 0);
+    rect->setSource(ZStackObjectSourceFactory::MakeRectRoiSource());
+    rect->setPenetrating(true);
+    rect->setZ(buddyView()->getCurrentZ());
+    rect->setColor(255, 128, 128);
+    rect->useCosmeticPen(true);
+    rect->setDefaultPenWidth(3);
+
+#ifdef _DEBUG_
+    std::cout << "Adding roi: " << rect << std::endl;
+#endif
+//    buddyDocument()->removeObject(rect->getSource(), false);
+
+    ZStackObject *obj = buddyDocument()->getObjectGroup().findFirstSameSource(
+          ZStackObject::TYPE_RECT2D,
+          ZStackObjectSourceFactory::MakeRectRoiSource());
+    ZRect2d *oldRect = dynamic_cast<ZRect2d*>(obj);
+    if (oldRect != NULL) {
+      buddyDocument()->executeRemoveObjectCommand(obj);
+    }
+
+    buddyDocument()->addObject(rect, false); //Undo will be handled after roi accepted
+
+    m_interactiveContext.setRectEditMode(ZInteractiveContext::RECT_DRAW);
+    m_interactiveContext.setSwcEditMode(ZInteractiveContext::SWC_EDIT_SELECT_RECT);
+//    buddyDocument()->executeAddObjectCommand(rect);
+  }
+    break;
   case ZStackOperator::OP_RECT_ROI_INIT:
   {
     ZRect2d *rect = new ZRect2d(currentStackPos.x(), currentStackPos.y(),
@@ -3276,7 +3409,6 @@ void ZStackPresenter::process(ZStackOperator &op)
     }
 
     buddyDocument()->addObject(rect, false); //Undo will be handled after roi accepted
-
 //    buddyDocument()->executeAddObjectCommand(rect);
   }
     break;

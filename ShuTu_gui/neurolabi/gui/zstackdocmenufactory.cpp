@@ -55,6 +55,7 @@ QMenu* ZStackDocMenuFactory::makeSwcNodeContextMenu(
   submenu->addAction(doc->getAction(ZActionFactory::ACTION_SELECT_SWC_BRANCH));
   submenu->addAction(doc->getAction(
                        ZActionFactory::ACTION_SELECT_CONNECTED_SWC_NODE));
+  submenu->addAction(doc->getAction(ZActionFactory::ACTION_SELECT_SWC_NODE_INVERSE));
   submenu->addAction(doc->getAction(ZActionFactory::ACTION_SELECT_ALL_SWC_NODE));
 
   menu->addMenu(submenu);

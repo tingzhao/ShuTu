@@ -583,4 +583,69 @@ void ZPainter::setOpacity(double alpha)
 {
   m_painter.setOpacity(alpha);
 }
+
+void ZPainter::DrawText(QPainter &painter, const QStringList &text)
+{
+  if (!text.empty()) {
+    int maxLength = 0;
+    QString compText;
+    foreach (const QString &str, text) {
+      if (str.length() > maxLength) {
+        maxLength = str.length();
+      }
+      compText += str + "\n";
+    }
+
+    maxLength = std::min(maxLength, 80);
+
+    int width = maxLength * 8;
+    int height = text.length() * 18;
+
+    if (width > 0 && height > 0) {
+      QPixmap pixmap(width, height);
+      pixmap.fill(QColor(0, 0, 0, 128));
+
+      QPainter bufferPainter(&pixmap);
+      bufferPainter.setPen(QColor(255, 255, 255));
+
+      //    bufferPainter.fillRect(pixmap.rect(), QColor(0, 0, 0, 0));
+      bufferPainter.drawText(QRectF(10, 1, width, height), compText);
+      painter.save();
+      painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+      painter.drawPixmap(0, 0, pixmap);
+      painter.restore();
+    }
+  }
+}
+
+void ZPainter::DrawText(QPainter &painter, const QString &text)
+{
+  if (!text.isEmpty()) {
+    QStringList textList;
+    textList.append(text);
+    DrawText(painter, text);
+  }
+}
+
+QStringList ZPainter::GetSwcSelectionText()
+{
+  QStringList text;
+
+  text.append("Selection mode on:");
+  text.append("  1: downstream");
+  text.append("  2: upstream");
+  text.append("  3: neighboring nodes");
+  text.append("  4: host branch");
+  text.append("  5: connected nodes");
+  text.append("  6: inverse selection");
+  text.append("  7: select small trees");
+
+  return text;
+}
+
+void ZPainter::DrawSwcSelectionText(QPainter &painter)
+{
+  DrawText(painter, GetSwcSelectionText());
+}
+
 #endif

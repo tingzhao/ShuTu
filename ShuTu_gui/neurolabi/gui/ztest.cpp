@@ -19835,7 +19835,7 @@ void ZTest::test(MainWindow *host)
 
 #endif
 
-#if 1
+#if 0
   std::string dataDir = GET_DATA_DIR + "/paper/neutu/data1";
 //  std::string dataFile = dataDir + "/DH070613C2X100-20_invert_cropped.tif";
 
@@ -19907,6 +19907,11 @@ void ZTest::test(MainWindow *host)
   C_Stack::write(GET_TEST_DATA_DIR + "/test.tif", out);
 
   C_Stack::kill(out);
+#endif
+
+#if 1
+  std::string path = GET_TEST_DATA_DIR + "/_system/biocytin/granuleCell63XStart/granule-.tiles.json";
+  std::cout <<  ZBiocytinFileNameParser::getCoreName(path) << std::endl;
 #endif
 
   std::cout << "Done." << std::endl;

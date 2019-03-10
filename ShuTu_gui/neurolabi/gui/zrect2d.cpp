@@ -47,6 +47,18 @@ bool ZRect2d::isSliceVisible(int z, NeuTube::EAxis /*sliceAxis*/) const
   return isValid() && (m_isPenetrating || z == m_z);
 }
 
+void ZRect2d::preparePen(QPen *pen) const
+{
+  pen->setColor(m_color);
+  if (isSelected()) {
+    pen->setWidth(pen->width() + 5);
+    pen->setStyle(Qt::DashLine);
+  } else {
+    pen->setWidth(getDefaultPenWidth());
+  }
+  pen->setCosmetic(m_usingCosmeticPen);
+}
+
 void ZRect2d::display(ZPainter &painter, int slice, EDisplayStyle /*option*/,
                       NeuTube::EAxis sliceAxis) const
 {
@@ -59,12 +71,8 @@ void ZRect2d::display(ZPainter &painter, int slice, EDisplayStyle /*option*/,
     return;
   }
 
-  QColor color = m_color;
-  QPen pen(color);
-  if (isSelected()) {
-    pen.setWidth(pen.width() + 5);
-    pen.setStyle(Qt::DashLine);
-  }
+  QPen pen;
+  preparePen(&pen);
 
   painter.setPen(pen);
   painter.setBrush(Qt::NoBrush);
@@ -85,12 +93,8 @@ bool ZRect2d::display(QPainter *rawPainter, int /*z*/, EDisplayStyle /*option*/,
     return painted;
   }
 
-  QColor color = m_color;
-  QPen pen(color);
-  if (isSelected()) {
-    pen.setWidth(pen.width() + 5);
-    pen.setStyle(Qt::DashLine);
-  }
+  QPen pen;
+  preparePen(&pen);
 
   rawPainter->setPen(pen);
   rawPainter->setBrush(Qt::NoBrush);

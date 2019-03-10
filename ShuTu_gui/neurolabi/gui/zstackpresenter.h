@@ -37,6 +37,7 @@ class ZStackOperator;
 class ZStackMvc;
 class ZKeyOperationConfig;
 class ZStackDocMenuFactory;
+class ZSwcIsolationDialog;
 
 class ZStackPresenter : public QObject {
   Q_OBJECT
@@ -429,6 +430,8 @@ protected:
 
   void addActiveObject(EObjectRole role, ZStackObject *obj);
 
+  ZSwcIsolationDialog* getSwcIsolationDlg();
+
 protected:
   //ZStackFrame *m_parent;
   QList<ZStackObject*> m_decorationList;
@@ -527,6 +530,8 @@ protected:
 
   ZActionFactory *m_actionFactory;
   ZStackDocMenuFactory *m_menuFactory;
+
+  ZSwcIsolationDialog *m_swcIsolationDlg;
 
   int m_zOrder;
 

@@ -37,11 +37,7 @@ public:
     STATE_DRAW_STROKE, STATE_DRAW_LINE, STATE_LEFT_BUTTON_PRESSED,
     STATE_RIGHT_BUTTON_PRESSED, STATE_MOVE_OBJECT, STATE_SWC_SMART_EXTEND,
     STATE_SWC_EXTEND, STATE_SWC_CONNECT, STATE_SWC_ADD_NODE,
-    STATE_DRAW_RECT, STATE_SWC_SELECTION
-  };
-
-  enum EKeyMode {
-    KM_NORMAL, KM_SWC_SELECTION
+    STATE_DRAW_RECT, STATE_SWC_SELECTION, STATE_SWC_RECT_SELECT
   };
 
   QList<ZStackObject*> getDecorationList() const;
@@ -86,12 +82,14 @@ public:
     m_isKeyEventEnabled = enabled;
   }
 
-  void setKeyMode(EKeyMode mode) {
-    m_keyMode = mode;
+  void setKeyMode(ZInteractiveContext::EKeyMode mode) {
+    m_interactiveContext.setKeyMode(mode);
+//    m_keyMode = mode;
   }
 
-  EKeyMode getKeyMode() const {
-    return m_keyMode;
+  ZInteractiveContext::EKeyMode getKeyMode() const {
+//    return m_keyMode;
+    return m_interactiveContext.getKeyMode();
   }
 
   void showContextMenu();
@@ -151,7 +149,7 @@ private:
 
   int m_previousKey;
   Qt::KeyboardModifiers m_previousKeyModifiers;
-  EKeyMode m_keyMode;
+  ZInteractiveContext::EKeyMode m_keyMode;
 
   Z3DTrackballInteractionHandler* m_interactionHandler;
   //ZSingleSwcNodeActionActivator m_singleSwcNodeActionActivator;

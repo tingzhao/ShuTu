@@ -2,6 +2,7 @@
 #include "tz_cdefs.h"
 #include "zswctree.h"
 #include "zintcuboid.h"
+#include "neutubeconfig.h"
 
 //const char* ZStackObject::m_nodeAdapterId = "!NodeAdapter";
 
@@ -12,6 +13,7 @@ ZStackObject::ZStackObject() : m_selected(false), m_isSelectable(true),
   m_visualEffect(NeuTube::Display::VE_NONE), m_prevDisplaySlice(-1)
 {
   m_type = GetType();
+  m_defaultPenWidth = NeutubeConfig::getInstance().getDefaultPenWidth();
   setSliceAxis(NeuTube::Z_AXIS);
 }
 
@@ -22,8 +24,6 @@ ZStackObject::~ZStackObject()
             << getSource() << std::endl;
 #endif
 }
-
-double ZStackObject::m_defaultPenWidth = 0.5;
 
 bool ZStackObject::display(QPainter */*painter*/, int /*z*/,
                            EDisplayStyle /*option*/, EDisplaySliceMode /*sliceMode*/,

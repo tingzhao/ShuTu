@@ -345,6 +345,8 @@ public:
   void notifyViewChanged(const ZStackViewParam &param);
   void notifyViewChanged();
 
+  void updateViewText(ZInteractiveContext::EKeyMode mode);
+  void updateViewText();
 
 public: //Change view parameters
   void increaseZoomRatio();

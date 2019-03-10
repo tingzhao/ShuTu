@@ -266,6 +266,7 @@ public: //attributes
 
   std::set<Swc_Tree_Node*> getSelectedSwcNodeSet() const;
   std::set<Swc_Tree_Node*> getUnselectedSwcNodeSet() const;
+  std::set<Swc_Tree_Node*> getSelectedSwcNodeSetInRange() const;
 
   static QList<Swc_Tree_Node*> getSelectedSwcNodeList(
       const ZSwcTree *tree);
@@ -442,6 +443,8 @@ public:
   ZNeuronTracer &getNeuronTracer() {
     return m_neuronTracer;
   }
+
+  void updateSwcPenWidth();
 
 public: //Image processing
   static int autoThreshold(Stack* getStack);
@@ -651,6 +654,11 @@ public:
   inline std::string additionalSource() { return m_additionalSource; }
   inline void setAdditionalSource(const std::string &filePath) {
     m_additionalSource = filePath;
+  }
+
+  inline std::string getMainSource() { return m_mainSource; }
+  inline void setMainSource(const std::string &filePath) {
+    m_mainSource = filePath;
   }
 
   bool hasObjectSelected() const;
@@ -956,6 +964,8 @@ public:
     QSet<ZStackObject::ETarget> m_updatedTarget;
   };
 
+  bool executeDeleteSwcNodeCommandInStackRange();
+
 public slots: //undoable commands
   /*!
    * \brief Add an object
@@ -1159,6 +1169,10 @@ protected:
   virtual void customNotifyObjectModified(ZStackObject::EType type);
   void removeRect2dRoi();
 
+  bool executeDeleteSwcNodeSetCommand(
+      std::set<Swc_Tree_Node *> &nodeSet,
+      ZUndoCommand *allCommand, QString &message);
+
 private:
   void init();
 
@@ -1183,6 +1197,9 @@ private:
   const T* getFirstUserByType() const;
 
   void updateTraceMask();
+
+//  void infoLockObjectModifiedTypeBufferBufferMutex(bool locking);
+
 
 private:
   //Main stack
@@ -1215,6 +1232,7 @@ private:
   ZNeuronTracer m_neuronTracer;
 
   //Meta information
+  std::string m_mainSource;
   ZStackFile m_stackSource;
   std::string m_additionalSource;
 

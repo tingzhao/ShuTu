@@ -77,6 +77,8 @@ public:
       const QRectF &sourceRectIn, const QRectF &sourceRectOut,
       const QRectF &targetRectIn);
 
+  void preparePen(QPen *pen) const;
+
 private:
   int m_x0;
   int m_y0;

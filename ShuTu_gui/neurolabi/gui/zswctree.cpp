@@ -526,7 +526,7 @@ void ZSwcTree::display(ZPainter &painter, int slice,
 
   //Draw skeletons
   pen.setCosmetic(true);
-  pen.setWidthF(strokeWidth * 2.0);
+  pen.setWidthF(strokeWidth * 3.0);
   for (const Swc_Tree_Node *tn = begin(); tn != end(); tn = next()) {
     if (!SwcTreeNode::isRoot(tn)) {
       const Swc_Tree_Node *lowerTn = tn;

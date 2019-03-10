@@ -56,7 +56,7 @@
     <Swc_Node status="on"></Swc_Node>
   </Object_Manager>
   <Autosave>
-    <Interval>300000</Interval>
+    <Interval>600000</Interval>
   </Autosave>
   <Application>Biocytin</Application>
 </neutube>

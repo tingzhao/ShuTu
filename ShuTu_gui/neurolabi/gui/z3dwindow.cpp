@@ -962,7 +962,7 @@ void Z3DWindow::createActions()
 
   m_connectToSwcNodeAction = new QAction("Connect to", this);
   m_connectToSwcNodeAction->setShortcut(Qt::Key_C);
-  m_connectToSwcNodeAction->setStatusTip(
+  m_connectToSwcNodeAction->setToolTip(
         "Connect the currently selected node to another");
   connect(m_connectToSwcNodeAction, SIGNAL(triggered()), this,
           SLOT(startConnectingSwcNode()));
@@ -2576,7 +2576,9 @@ void Z3DWindow::closeEvent(QCloseEvent */*event*/)
 
 void Z3DWindow::keyPressEvent(QKeyEvent *event)
 {
-  ZInteractionEngine::EKeyMode keyMode = ZInteractionEngine::KM_NORMAL;
+//  qDebug() << event->key();
+
+  ZInteractiveContext::EKeyMode keyMode = ZInteractiveContext::KM_NORMAL;
   switch(event->key())
   {
   case Qt::Key_Backspace:
@@ -2632,17 +2634,11 @@ void Z3DWindow::keyPressEvent(QKeyEvent *event)
   case Qt::Key_S:
     if (event->modifiers() == Qt::ControlModifier) {
       m_doc->saveSwc(this);
-    } else if (event->modifiers() == Qt::NoModifier) {
-      keyMode = ZInteractionEngine::KM_SWC_SELECTION;
-
-      /*
-      notifyUser("Selection mode on:"
-                 "1: downstream;"
-                 "2: upstream;"
-                 "3: connected nodes;"
-                 "4: inverse selection;"
-                 "5: select small trees;");
-                 */
+    }
+    break;
+  case Qt::Key_H:
+    if (event->modifiers() == Qt::NoModifier) {
+      keyMode = ZInteractiveContext::KM_SWC_SELECTION;
     }
     break;
   case Qt::Key_I:
@@ -2761,47 +2757,71 @@ void Z3DWindow::keyPressEvent(QKeyEvent *event)
       m_doc->executeSetRootCommand();
     }
     break;
+  case Qt::Key_Exclam:
+    m_doc->selectDownstreamNode();
+    break;
   case Qt::Key_1:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
       m_doc->selectDownstreamNode();
     }
     break;
+  case Qt::Key_At:
+    m_doc->selectUpstreamNode();
+    break;
   case Qt::Key_2:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
       m_doc->selectUpstreamNode();
     }
     break;
+  case Qt::Key_NumberSign:
+    m_doc->selectNeighborSwcNode();
+    break;
   case Qt::Key_3:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
 //      m_doc->selectConnectedNode();
       m_doc->selectNeighborSwcNode();
     }
     break;
+  case Qt::Key_Dollar:
+    m_doc->selectBranchNode();
+    break;
   case Qt::Key_4:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
       m_doc->selectBranchNode();
 //      m_doc->inverseSwcNodeSelection();
     }
     break;
+  case Qt::Key_Percent:
+    m_doc->selectConnectedNode();
+    break;
   case Qt::Key_5:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
       m_doc->selectConnectedNode();
     }
     break;
+  case Qt::Key_AsciiCircum:
+    m_doc->inverseSwcNodeSelection();
+    break;
   case Qt::Key_6:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
       m_doc->inverseSwcNodeSelection();
+    }
+    break;
+  case Qt::Key_Ampersand:
+    if (m_swcIsolationDlg->exec()) {
+      m_doc->selectNoisyTrees(m_swcIsolationDlg->getLengthThreshold(),
+                              m_swcIsolationDlg->getDistanceThreshold());
     }
     break;
   case Qt::Key_7:
     if (getCanvas()->getInteractionEngine()->getKeyMode() ==
-        ZInteractionEngine::KM_SWC_SELECTION) {
+        ZInteractiveContext::KM_SWC_SELECTION) {
       if (m_swcIsolationDlg->exec()) {
         m_doc->selectNoisyTrees(m_swcIsolationDlg->getLengthThreshold(),
                                 m_swcIsolationDlg->getDistanceThreshold());
@@ -4272,8 +4292,9 @@ void Z3DWindow::selectSwcTreeNodeInRoi(bool appending)
       tree->processSelection();
     }
 
-    m_doc->notifySwcTreeNodeSelectionChanged();
     removeRectRoi();
+
+    m_doc->notifySwcTreeNodeSelectionChanged();
   }
 }
 

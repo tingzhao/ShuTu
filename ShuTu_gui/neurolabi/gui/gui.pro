@@ -88,8 +88,6 @@ isEqual(QT_MAJOR_VERSION,4) {
     message("Qt 4")
 }
 
-#QT += webkit
-
 contains(CONFIG, static_glew) { # glew from ext folder
     include($$PWD/ext/glew.pri)
 } else { # use your own glew
@@ -558,7 +556,7 @@ HEADERS += mainwindow.h \
     zstackdochelper.h \
 #    flyem/zflyembodyannotationdialog.h \
 #    flyem/zflyemsupervisor.h \
-    zkeyeventmapperfactory.h \
+#    zkeyeventmapperfactory.h \
     zkeyoperationmapsequence.h \
     zpuncta.h \
 #    flyem/zdvidtileupdatetaskmanager.h \
@@ -1018,7 +1016,7 @@ SOURCES += main.cpp \
     zstackdochelper.cpp \
 #    flyem/zflyembodyannotationdialog.cpp \
 #    flyem/zflyemsupervisor.cpp \
-    zkeyeventmapperfactory.cpp \
+#    zkeyeventmapperfactory.cpp \
     zkeyoperationmapsequence.cpp \
     zpuncta.cpp \
 #    flyem/zdvidtileupdatetaskmanager.cpp \

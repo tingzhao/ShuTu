@@ -925,6 +925,7 @@ void ZStackFrame::keyPressEvent(QKeyEvent *event)
     if (!m_presenter->processKeyPressEvent(event)) {
       emit keyEventEmitted(event);
     }
+    m_view->updateViewText();
   }
 }
 
@@ -996,6 +997,12 @@ QStringList ZStackFrame::toStringList() const
 void ZStackFrame::updateView()
 {
   m_view->redraw(ZStackView::UPDATE_QUEUED);
+}
+
+void ZStackFrame::updateSwcPenWidth()
+{
+  document()->updateSwcPenWidth();
+  updateView();
 }
 
 void ZStackFrame::undo()

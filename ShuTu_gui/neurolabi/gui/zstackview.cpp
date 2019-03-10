@@ -2361,6 +2361,21 @@ void ZStackView::notifyViewChanged()
   notifyViewChanged(getViewParameter(NeuTube::COORD_STACK));
 }
 
+void ZStackView::updateViewText(ZInteractiveContext::EKeyMode mode)
+{
+  if (mode == ZInteractiveContext::KM_SWC_SELECTION) {
+    m_imageWidget->setText(ZPainter::GetSwcSelectionText());
+  } else {
+    m_imageWidget->setText(QStringList());
+  }
+  updateImageScreen(UPDATE_DIRECT);
+}
+
+void ZStackView::updateViewText()
+{
+  updateViewText(buddyPresenter()->interactiveContext().getKeyMode());
+}
+
 void ZStackView::notifyViewChanged(const ZStackViewParam &param)
 {
 #ifdef _DEBUG_2

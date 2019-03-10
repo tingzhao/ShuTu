@@ -138,6 +138,7 @@ public:
 
   void displayActiveDecoration(bool enabled = true);
 
+  void updateSwcPenWidth();
 
   /*!
    * \brief Get the global geometry of the view window.

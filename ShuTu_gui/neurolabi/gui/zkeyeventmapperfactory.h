@@ -8,7 +8,7 @@ class ZKeyEventMapperFactory
 public:
   ZKeyEventMapperFactory();
 
-  static ZKeyEventMapper* MakeSwcNodeMapper();
+//  static ZKeyEventMapper* MakeSwcNodeMapper();
 };
 
 #endif // ZKEYEVENTMAPPERFACTORY_H

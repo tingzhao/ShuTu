@@ -6,6 +6,8 @@ ZKeyEventMapperFactory::ZKeyEventMapperFactory()
 {
 }
 
+
+#if 0
 ZKeyEventMapper* ZKeyEventMapperFactory::MakeSwcNodeMapper()
 {
 
@@ -37,3 +39,4 @@ ZKeyEventMapper* ZKeyEventMapperFactory::MakeSwcNodeMapper()
 
   return mapper;
 }
+#endif

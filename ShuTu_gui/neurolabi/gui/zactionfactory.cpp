@@ -311,26 +311,30 @@ QAction* ZActionFactory::MakeAction(EAction actionKey, QObject *parent)
   }
     break;
   case ACTION_SELECT_DOWNSTREAM:
-    action = new QAction("Downstream", parent);
+    action = new QAction("Downstream (Shift 1)", parent);
     action->setStatusTip("Select downstream nodes");
     break;
   case ACTION_SELECT_UPSTREAM:
-    action = new QAction("Upstream", parent);
+    action = new QAction("Upstream (Shift 2)", parent);
     action->setStatusTip("Select upstream nodes");
     break;
   case ACTION_SELECT_NEIGHBOR_SWC_NODE:
-    action = new QAction("Neighbors", parent);
+    action = new QAction("Neighbors (Shift 3)", parent);
     action->setStatusTip(
           "Select neighbors (nodes coonected directly) of the currently selected nodes");
     break;
   case ACTION_SELECT_SWC_BRANCH:
-    action = new QAction("Host branch", parent);
+    action = new QAction("Host branch (Shift 4)", parent);
     action->setStatusTip("Select branches containing the currently selected nodes");
     break;
   case ACTION_SELECT_CONNECTED_SWC_NODE:
-    action = new QAction("All connected nodes", parent);
+    action = new QAction("All connected nodes (Shift 5)", parent);
     action->setStatusTip("Select all nodes connected (directly or indirectly) "
                          "of the currently selected nodes");
+    break;
+  case ACTION_SELECT_SWC_NODE_INVERSE:
+    action = new QAction("Inverse selection (Shift 6)", parent);
+    action->setStatusTip("Select unselected nodes and unselected selected nodes");
     break;
   case ACTION_SELECT_ALL_SWC_NODE:
     action = new QAction("All nodes", parent);

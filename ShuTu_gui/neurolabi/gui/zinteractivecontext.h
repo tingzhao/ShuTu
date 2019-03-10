@@ -48,6 +48,7 @@ public:
   enum SwcEditMode {
     SWC_EDIT_OFF = 0,
     SWC_EDIT_SELECT,
+    SWC_EDIT_SELECT_RECT,
     SWC_EDIT_CONNECT,
     SWC_EDIT_EXTEND,
     SWC_EDIT_SMART_EXTEND,
@@ -96,8 +97,21 @@ public:
     INTERACT_ADD_BOOKMARK, INTERACT_ADD_SYNAPSE, INTERACT_MOVE_SYNAPSE
   };
 
+  enum EKeyMode {
+    KM_NORMAL, KM_SWC_SELECTION
+  };
+
 public:
   ZInteractiveContext();
+
+  void setKeyMode(ZInteractiveContext::EKeyMode mode) {
+    m_keyMode = mode;
+  }
+
+  ZInteractiveContext::EKeyMode getKeyMode() const {
+    return m_keyMode;
+  }
+
   inline void setTraceMode(TraceMode mode) { m_traceMode = mode; }
   inline void setMarkPunctaMode(MarkPunctaMode mode) {m_markPunctaMode = mode;}
   inline void setTubeEditMode(TubeEditMode mode) { m_tubeEditMode = mode; }
@@ -177,6 +191,7 @@ private:
   bool m_exitingEdit;
   bool m_blockingContextMenu;
   NeuTube::EAxis m_sliceAxis;
+  EKeyMode m_keyMode;
   //ZImageWidget *m_imageWidget;
   //QRect m_projRegion;
   //QRect m_viewPort;
