@@ -1477,9 +1477,17 @@ void ZStackDoc::makeAction(ZActionFactory::EAction item)
         connect(action, SIGNAL(triggered()),
                 this, SLOT(executeDeleteSwcNodeCommand()));
         break;
+      case ZActionFactory::ACTION_DELETE_SWC_NODE_IN_RANGE:
+        connect(action, SIGNAL(triggered()),
+                this, SLOT(executeDeleteSwcNodeCommandInStackRange()));
+        break;
       case ZActionFactory::ACTION_DELETE_UNSELECTED_SWC_NODE:
         connect(action, SIGNAL(triggered()),
                 this, SLOT(executeDeleteUnselectedSwcNodeCommand()));
+        break;
+      case ZActionFactory::ACTION_DELETE_UNSELECTED_SWC_NODE_IN_RANGE:
+        connect(action, SIGNAL(triggered()),
+                this, SLOT(executeDeleteUnselectedSwcNodeCommandInStackRange()));
         break;
       case ZActionFactory::ACTION_INSERT_SWC_NODE:
         connect(action, SIGNAL(triggered()),
@@ -3843,6 +3851,33 @@ std::set<Swc_Tree_Node*> ZStackDoc::getUnselectedSwcNodeSet() const
       Swc_Tree_Node *tn = treeIter.next();
       if (!tree->isNodeSelected(tn)) {
         swcNodeSet.insert(tn);
+      }
+    }
+  }
+
+  return swcNodeSet;
+}
+
+std::set<Swc_Tree_Node*> ZStackDoc::getUnselectedSwcNodeSetInRange() const
+{
+  std::set<Swc_Tree_Node*> swcNodeSet;
+
+  TStackObjectList objList = getObjectList(ZStackObject::TYPE_SWC);
+
+  ZIntCuboid box = getStack()->getBoundBox();
+
+  for (TStackObjectList::const_iterator iter = objList.begin();
+       iter != objList.end(); ++iter) {
+    const ZSwcTree* tree = dynamic_cast<const ZSwcTree*>(*iter);
+    ZSwcTree::DepthFirstIterator treeIter(tree);
+    treeIter.excludeVirtual(true);
+
+    while (treeIter.hasNext()) {
+      Swc_Tree_Node *tn = treeIter.next();
+      if (!tree->isNodeSelected(tn)) {
+        if (box.contains(SwcTreeNode::center(tn).toIntPoint())) {
+          swcNodeSet.insert(tn);
+        }
       }
     }
   }
@@ -6934,8 +6969,39 @@ bool ZStackDoc::executeDeleteSwcNodeCommandInStackRange()
   return succ;
 }
 
+bool ZStackDoc::executeDeleteUnselectedSwcNodeCommandInStackRange()
+{  
+  bool succ = false;
+  QString message;
+
+  if (hasSelectedSwcNode()) {
+    std::set<Swc_Tree_Node*> nodeSet = getUnselectedSwcNodeSetInRange();
+    if (!nodeSet.empty()) {
+      beginObjectModifiedMode(OBJECT_MODIFIED_CACHE);
+      //    QSet<ZStackObject::ETarget> targetSet;
+
+      ZStackDocCommand::SwcEdit::CompositeCommand *allCommand =
+          new ZStackDocCommand::SwcEdit::CompositeCommand(this);
+      succ = executeDeleteSwcNodeSetCommand(nodeSet, allCommand, message);
+
+      endObjectModifiedMode();
+      notifyObjectModified();
+    }
+  }
+
+  notifyStatusMessageUpdated(message);
+
+  return succ;
+}
+
 bool ZStackDoc::executeDeleteSwcNodeCommand()
 {
+  /*
+  if (getTag() == NeuTube::Document::BIOCYTIN_STACK) {
+    return executeDeleteSwcNodeCommandInStackRange();
+  }
+  */
+
   bool succ = false;
   QString message;
 
@@ -6999,6 +7065,12 @@ bool ZStackDoc::executeDeleteSwcNodeCommand()
 
 bool ZStackDoc::executeDeleteUnselectedSwcNodeCommand()
 {
+  /*
+  if (getTag() == NeuTube::Document::BIOCYTIN_STACK) {
+    return executeDeleteUnselectedSwcNodeCommandInStackRange();
+  }
+  */
+
   bool succ = false;
   QString message;
 

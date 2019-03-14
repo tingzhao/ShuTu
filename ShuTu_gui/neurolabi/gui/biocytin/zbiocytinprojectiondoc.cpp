@@ -59,7 +59,13 @@ void ZBiocytinProjectionDoc::selectSwcNode(const ZRect2d &roi)
 bool ZBiocytinProjectionDoc::executeDeleteSwcNodeCommand()
 {
   if (m_parentDoc.get() != NULL) {
-    return m_parentDoc->executeDeleteSwcNodeCommandInStackRange();
+    bool succ = m_parentDoc->executeDeleteSwcNodeCommandInStackRange();
+    if (succ) {
+      notifyStatusMessageUpdated(
+            "The selected nodes in this tile have been deleted. "
+            "It can only be undone in the stack or 3D view");
+    }
+    return succ;
   }
 
   return ZStackDoc::executeDeleteSwcNodeCommand();
@@ -68,7 +74,13 @@ bool ZBiocytinProjectionDoc::executeDeleteSwcNodeCommand()
 bool ZBiocytinProjectionDoc::executeDeleteUnselectedSwcNodeCommand()
 {
   if (m_parentDoc.get() != NULL) {
-    return m_parentDoc->executeDeleteUnselectedSwcNodeCommand();
+    bool succ = m_parentDoc->executeDeleteUnselectedSwcNodeCommandInStackRange();
+    if (succ) {
+      notifyStatusMessageUpdated(
+            "The unselected nodes in this tile have been deleted. "
+            "It can only be undone in the stack or 3D view");
+    }
+    return succ;
   }
 
   return ZStackDoc::executeDeleteUnselectedSwcNodeCommand();

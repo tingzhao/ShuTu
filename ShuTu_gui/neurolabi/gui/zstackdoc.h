@@ -267,6 +267,7 @@ public: //attributes
   std::set<Swc_Tree_Node*> getSelectedSwcNodeSet() const;
   std::set<Swc_Tree_Node*> getUnselectedSwcNodeSet() const;
   std::set<Swc_Tree_Node*> getSelectedSwcNodeSetInRange() const;
+   std::set<Swc_Tree_Node*> getUnselectedSwcNodeSetInRange() const;
 
   static QList<Swc_Tree_Node*> getSelectedSwcNodeList(
       const ZSwcTree *tree);
@@ -964,8 +965,6 @@ public:
     QSet<ZStackObject::ETarget> m_updatedTarget;
   };
 
-  bool executeDeleteSwcNodeCommandInStackRange();
-
 public slots: //undoable commands
   /*!
    * \brief Add an object
@@ -1036,6 +1035,9 @@ public slots: //undoable commands
   virtual bool executeSetBranchPoint();
   virtual bool executeConnectIsolatedSwc();
   virtual bool executeResetBranchPoint();
+
+  bool executeDeleteSwcNodeCommandInStackRange();
+  bool executeDeleteUnselectedSwcNodeCommandInStackRange();
 
   virtual bool executeMoveAllSwcCommand(double dx, double dy, double dz);
   virtual bool executeScaleAllSwcCommand(double sx, double sy, double sz,

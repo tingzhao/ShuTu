@@ -20,16 +20,21 @@ void ZStackDocMenuFactory::init()
 }
 
 QMenu* ZStackDocMenuFactory::makeSwcNodeContextMenu(
-    ZStackDoc *doc, QWidget */*parentWidget*/, QMenu *menu)
+    ZStackDoc *doc, bool fromTile, QWidget */*parentWidget*/, QMenu *menu)
 {
   if (menu == NULL) {
     menu = new QMenu(NULL);
   }
 
-  menu->addAction(doc->getAction(ZActionFactory::ACTION_DELETE_SWC_NODE));
-
-  menu->addAction(doc->getAction(
-                    ZActionFactory::ACTION_DELETE_UNSELECTED_SWC_NODE));
+  if (fromTile) {
+    menu->addAction(doc->getAction(ZActionFactory::ACTION_DELETE_SWC_NODE_IN_RANGE));
+    menu->addAction(doc->getAction(
+                      ZActionFactory::ACTION_DELETE_UNSELECTED_SWC_NODE_IN_RANGE));
+  } else {
+    menu->addAction(doc->getAction(ZActionFactory::ACTION_DELETE_SWC_NODE));
+    menu->addAction(doc->getAction(
+                      ZActionFactory::ACTION_DELETE_UNSELECTED_SWC_NODE));
+  }
 
   menu->addAction(doc->getAction(ZActionFactory::ACTION_BREAK_SWC_NODE));
   menu->addAction(doc->getAction(ZActionFactory::ACTION_CONNECT_SWC_NODE));

@@ -80,12 +80,29 @@ QAction* ZActionFactory::makeAction(
     action->setIcon(QIcon(":/images/delete.png"));
     doc->connect(action, SIGNAL(triggered()), doc, SLOT(executeDeleteSwcNodeCommand()));
     break;
+  case ACTION_DELETE_SWC_NODE_IN_RANGE:
+    action = new QAction("Delete", parent);
+    action->setShortcut(Qt::Key_X);
+    action->setStatusTip("Delete selected nodes");
+    action->setIcon(QIcon(":/images/delete.png"));
+    doc->connect(action, SIGNAL(triggered()),
+                 doc, SLOT(executeDeleteSwcNodeCommandInStackRange()));
+    break;
   case ACTION_DELETE_UNSELECTED_SWC_NODE:
     action = new QAction("Delete Unselected", parent);
     action->setStatusTip("Delete unselected nodes");
+    action->setShortcut(QObject::tr("Shift+X"));
 //    action->setIcon(QIcon(":/images/delete.png"));
     doc->connect(action, SIGNAL(triggered()),
                  doc, SLOT(executeDeleteUnselectedSwcNodeCommand()));
+    break;
+  case ACTION_DELETE_UNSELECTED_SWC_NODE_IN_RANGE:
+    action = new QAction("Delete Unselected", parent);
+    action->setStatusTip("Delete unselected nodes");
+    action->setShortcut(QObject::tr("Shift+X"));
+//    action->setIcon(QIcon(":/images/delete.png"));
+    doc->connect(action, SIGNAL(triggered()),
+                 doc, SLOT(executeDeleteUnselectedSwcNodeCommandInStackRange()));
     break;
   case ACTION_INSERT_SWC_NODE:
     action = new QAction("Insert", parent);
@@ -361,8 +378,20 @@ QAction* ZActionFactory::MakeAction(EAction actionKey, QObject *parent)
     action->setStatusTip("Delete selected nodes");
     action->setIcon(QIcon(":/images/delete.png"));
     break;
+  case ACTION_DELETE_SWC_NODE_IN_RANGE:
+    action = new QAction("Delete", parent);
+    action->setShortcut(Qt::Key_X);
+    action->setStatusTip("Delete selected nodes");
+    action->setIcon(QIcon(":/images/delete.png"));
+    break;
   case ACTION_DELETE_UNSELECTED_SWC_NODE:
     action = new QAction("Delete Unselected", parent);
+    action->setShortcut(QObject::tr("Shift+X"));
+    action->setStatusTip("Delete unselected nodes");
+    break;
+  case ACTION_DELETE_UNSELECTED_SWC_NODE_IN_RANGE:
+    action = new QAction("Delete Unselected", parent);
+    action->setShortcut(QObject::tr("Shift+X"));
     action->setStatusTip("Delete unselected nodes");
     break;
   case ACTION_INSERT_SWC_NODE:

@@ -29,7 +29,7 @@ public:
 
 public:
   QMenu* makeSwcNodeContextMenu(
-      ZStackDoc *doc, QWidget *parentWidget, QMenu *menu);
+      ZStackDoc *doc, bool fromTile, QWidget *parentWidget, QMenu *menu);
   QMenu* makeSwcNodeContextMenu(
       ZStackPresenter *presenter, QWidget *parentWidget, QMenu *menu);
   QMenu* makeSrokePaintContextMenu(

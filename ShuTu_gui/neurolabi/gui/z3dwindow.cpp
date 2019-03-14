@@ -1152,7 +1152,7 @@ void Z3DWindow::createContextMenu()
 
   ZStackDocMenuFactory menuFactory;
   menuFactory.setSingleSwcNodeActionActivator(&m_singleSwcNodeActionActivator);
-  menuFactory.makeSwcNodeContextMenu(getDocument(), this, contextMenu);
+  menuFactory.makeSwcNodeContextMenu(getDocument(), false, this, contextMenu);
   contextMenu->addSeparator();
   contextMenu->addAction(m_locateSwcNodeIn2DAction);
   contextMenu->addAction(m_changeSwcNodeTypeAction);
@@ -2696,6 +2696,8 @@ void Z3DWindow::keyPressEvent(QKeyEvent *event)
   case Qt::Key_X:
     if (event->modifiers() == Qt::NoModifier) {
       getDocument()->executeDeleteSwcNodeCommand();
+    } else if (event->modifiers() == Qt::ShiftModifier) {
+      getDocument()->executeDeleteUnselectedSwcNodeCommand();
     }
     break;
   case Qt::Key_N:

@@ -109,6 +109,7 @@ void ZKeyOperationConfig::ConfigureSwcNodeMap(ZKeyOperationMap &map)
   shiftKeyMap[Qt::Key_S] = ZStackOperator::OP_SWC_MOVE_NODE_DOWN_FAST;
   shiftKeyMap[Qt::Key_D] = ZStackOperator::OP_SWC_MOVE_NODE_RIGHT_FAST;
   shiftKeyMap[Qt::Key_C] = ZStackOperator::OP_SWC_CONNECT_NODE_SMART;
+  shiftKeyMap[Qt::Key_X] = ZStackOperator::OP_SWC_DELETE_UNSELECTED_NODE;
 //  shiftKeyMap[Qt::Key_R] = ZStackOperator::OP_RECT_ROI_INIT;
 
   QMap<int, ZStackOperator::EOperation> &controlKeyMap = *(map.getControlMap());

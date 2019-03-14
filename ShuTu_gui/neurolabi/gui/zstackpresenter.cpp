@@ -717,7 +717,9 @@ void ZStackPresenter::createSwcNodeContextMenu()
     m_swcNodeContextMenu = getMenuFactory()->makeSwcNodeContextMenu(
           this, getParentWidget(), NULL);
     getMenuFactory()->makeSwcNodeContextMenu(
-          buddyDocument(), getParentWidget(), m_swcNodeContextMenu);
+          buddyDocument(),
+          (buddyDocument()->getTag() == NeuTube::Document::BIOCYTIN_STACK),
+          getParentWidget(), m_swcNodeContextMenu);
     m_swcNodeContextMenu->addSeparator();
     m_swcNodeContextMenu->addAction(
           getAction(ZActionFactory::ACTION_ADD_SWC_NODE));
@@ -2861,11 +2863,27 @@ void ZStackPresenter::process(ZStackOperator &op)
     enterSwcExtendMode();
     break;
   case ZStackOperator::OP_SWC_DELETE_NODE:
-    buddyDocument()->executeDeleteSwcNodeCommand();
+    if (buddyDocument()->getTag() == NeuTube::Document::BIOCYTIN_STACK) {
+      buddyDocument()->executeDeleteSwcNodeCommandInStackRange();
+    } else {
+      buddyDocument()->executeDeleteSwcNodeCommand();
+    }
     if (m_interactiveContext.swcEditMode() ==
         ZInteractiveContext::SWC_EDIT_EXTEND) {
       exitSwcExtendMode();
     }
+    break;
+  case ZStackOperator::OP_SWC_DELETE_UNSELECTED_NODE:
+    if (buddyDocument()->getTag() == NeuTube::Document::BIOCYTIN_STACK) {
+      buddyDocument()->executeDeleteUnselectedSwcNodeCommandInStackRange();
+    } else {
+      buddyDocument()->executeDeleteUnselectedSwcNodeCommand();
+    }
+    if (m_interactiveContext.swcEditMode() ==
+        ZInteractiveContext::SWC_EDIT_EXTEND) {
+      exitSwcExtendMode();
+    }
+    break;
     break;
   case ZStackOperator::OP_SWC_SELECT_SINGLE_NODE:
     buddyDocument()->recordSwcTreeNodeSelection();
