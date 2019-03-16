@@ -17,12 +17,19 @@ build:
 
 requirements:
   build:
+    - gxx_linux-64 # [linux]
+    - cmake
+
+  host:
     - qt      4*
     - fftw    3.3*
     - jansson 2.7
     - hdf5    1.8*
     - pango   1.40* # [linux64]
     - libxml2
+    - libGLU
+    - mesalib
+    - xorg-libx11
 
   run:
     - qt      4*
@@ -31,7 +38,10 @@ requirements:
     - hdf5    1.8*
     - pango   1.40* # [linux64]
     - libxml2
+    - libGLU
+    - mesalib
+    - xorg-libx11
    
 about:
-  home: http://github.com/janelia-flyem/NeuTu
+  home: https://github.com/tingzhao/ShuTu.git
   license: GPL

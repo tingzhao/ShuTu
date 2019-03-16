@@ -1,6 +1,14 @@
 if [ $(uname) == 'Darwin' ]; then
     CC=/usr/bin/cc
     CXX=/usr/bin/g++
+else
+    # conda is providing gcc and defining $CC,
+    # but the binary isn't named 'gcc'.
+    # Create a symlink for build scripts that expect that name.
+    cd $(dirname ${CC}) && ln -s $(basename ${CC}) gcc && cd -
+    cd $(dirname ${CXX}) && ln -s $(basename ${CXX}) g++ && cd -
+    cd $(dirname ${LD}) && ln -s $(basename ${LD}) ld && cd -
+    additional_qflag='LIBS+=-Wl,-rpath-link,/usr/lib64 LIBS+=-Wl,-rpath-link,/lib64 LIBS+=-L/usr/lib64 INCLUDEPATH+=/usr/include'
 fi
 
 if [ $(uname) == 'Darwin' ]; then
