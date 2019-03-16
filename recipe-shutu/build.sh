@@ -1,10 +1,10 @@
 if [ $(uname) == 'Darwin' ]; then
     CC=/usr/bin/cc
-    CXX=/usr/bin/clang
+    CXX=/usr/bin/g++
 fi
 
 if [ $(uname) == 'Darwin' ]; then
-    QMAKE_SPEC_PATH=${PREFIX}/mkspecs/macx-clang
+    QMAKE_SPEC_PATH=${PREFIX}/mkspecs/macx-g++
 else
     QMAKE_SPEC_PATH=${PREFIX}/mkspecs/linux-g++-64
 fi
