@@ -82,7 +82,13 @@ exists($$DVIDCPP_PATH) {
     INCLUDEPATH +=  $${CONDA_ENV}/include
     LIBS += -L$${CONDA_ENV}/lib
     unix: QMAKE_RPATHDIR *= $${CONDA_ENV}/lib
+	
+
 #    DEFINES += _ENABLE_LIBDVIDCPP_
+}
+
+unix:!macx {
+    QMAKE_RPATHDIR *= /usr/lib64 /lib64
 }
 
 contains(DEFINES, _ENABLE_LIBDVIDCPP_) {
