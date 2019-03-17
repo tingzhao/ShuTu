@@ -102,7 +102,7 @@ contains(CONFIG, static_glew) { # glew from ext folder
   }
 
   unix:!macx {
-    LIBS += -lGL -lGLEW -lGLU
+    LIBS += -lGLEW -lGLU
   }
 } # static glew
 
@@ -157,7 +157,7 @@ unix {
         LIBS += \#-lXt -lSM -lICE \
           -lX11 -lm \
           -lpthread \
-          -lGL -lrt -lGLU
+          -lrt -lGLU
         message(Checking arch...)
         contains(QMAKE_HOST.arch, x86_64) {
             message($$QMAKE_HOST.arch)
