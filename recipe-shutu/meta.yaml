@@ -27,9 +27,6 @@ requirements:
     - hdf5    1.8*
     - pango   1.40* # [linux64]
     - libxml2
-    - libGLU
-    - mesalib
-    - xorg-libx11
 
   run:
     - qt      4*
@@ -38,9 +35,6 @@ requirements:
     - hdf5    1.8*
     - pango   1.40* # [linux64]
     - libxml2
-    - libGLU
-    - mesalib
-    - xorg-libx11
    
 about:
   home: https://github.com/tingzhao/ShuTu.git

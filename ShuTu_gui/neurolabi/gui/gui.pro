@@ -154,7 +154,9 @@ unix {
     } else {
         DEFINES += _NEUTUBE_LINUX_
         DEFINES += _LINUX_
+	INCLUDEPATH += /usr/include
         LIBS += \#-lXt -lSM -lICE \
+          -L/usr/lib64 -L/lib64 \
           -lX11 -lm \
           -lpthread \
           -lrt -lGLU
