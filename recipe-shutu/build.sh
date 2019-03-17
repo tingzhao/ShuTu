@@ -35,7 +35,7 @@ fi
 
 edition=biocytin
 
-bash -x -e build.sh ${PREFIX}/bin/qmake ${QMAKE_SPEC_PATH} -e $edition $build_flag
+bash -x -e build.sh ${PREFIX}/bin/qmake ${QMAKE_SPEC_PATH} -e $edition $build_flag -q "$additional_qflag"
 
 # Install to conda environment
 if [ $(uname) == 'Darwin' ]; then

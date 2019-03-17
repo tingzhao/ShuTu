@@ -87,10 +87,6 @@ exists($$DVIDCPP_PATH) {
 #    DEFINES += _ENABLE_LIBDVIDCPP_
 }
 
-unix:!macx {
-    QMAKE_RPATHDIR *= /usr/lib64 /lib64
-}
-
 contains(DEFINES, _ENABLE_LIBDVIDCPP_) {
     LIBS *= -ldvidcpp -ljsoncpp -llz4 -lpng -lcurl -ljpeg -lboost_system -lboost_thread
     !contains(DEFINES, _LIBDVIDCPP_OLD_) {
