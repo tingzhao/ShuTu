@@ -48,6 +48,7 @@ class Z3DWindow;
 class ZRect2d;
 class ZSwcIsolationDialog;
 class HelpDialog;
+class MainWindow;
 //class Z3DRendererBase;
 
 class Z3DTabWidget : public QTabWidget
@@ -234,6 +235,8 @@ public:
   void setButtonStatus(int index, bool v);
   bool getButtonStatus(int index);
 
+  void attachMainWindow(MainWindow *mainWin);
+
 public:
   //Control panel setup
 
@@ -284,6 +287,8 @@ public slots:
   void diffView(); //Output difference between current view and recorded view
   void saveView(); //Save the view parameters into a file
   void loadView();
+
+  void showMainWindow();
 
   void resetCameraClippingRange(); // // Reset the camera clipping range to include this entire bounding box
   // redraw changed parts
@@ -410,6 +415,8 @@ public slots:
 
   void updateCuttingBox();
 
+  void detainMainWindow();
+
 
 protected:
   virtual void dragEnterEvent(QDragEnterEvent *event);
@@ -432,6 +439,7 @@ private:
 
   QMenu *m_viewMenu;
   QMenu *m_editMenu;
+  QMenu *m_windowMenu;
   QMenu *m_helpMenu;
 
   QAction *m_removeSelectedObjectsAction;
@@ -464,6 +472,7 @@ private:
   QAction *m_translateSwcNodeAction;
   QAction *m_changeSwcNodeSizeAction;
   QAction *m_helpAction;
+  QAction *m_showMainWinAction;
 
   QAction *m_refreshTraceMaskAction;
 
@@ -543,6 +552,8 @@ private:
   QToolBar *m_toolBar;
   ZSwcIsolationDialog *m_swcIsolationDlg;
   HelpDialog *m_helpDlg;
+
+  MainWindow *m_mainWindow;
 };
 
 #endif // Z3DWINDOW_H

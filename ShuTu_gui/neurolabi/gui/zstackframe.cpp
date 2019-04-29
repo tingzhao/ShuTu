@@ -1316,6 +1316,7 @@ Z3DWindow* ZStackFrame::open3DWindow(Z3DWindow::EInitMode mode)
 //    connect(window, SIGNAL(destroyed()), this, SLOT(detach3DWindow()));
     if (getMainWindow() != NULL) {
       getMainWindow()->endProgress();
+      window->attachMainWindow(getMainWindow());
     }
   }
 

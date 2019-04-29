@@ -6694,7 +6694,8 @@ void MainWindow::createStackFrameFromDocReader(ZStackDocReader *reader)
       //QApplication::processEvents();
     } else {
       emit progressDone();
-      frame->open3DWindow();
+      Z3DWindow *win = frame->open3DWindow();
+      win->attachMainWindow(this);
       delete frame;
     }
     if (!fileName.isEmpty()) {
@@ -6718,7 +6719,8 @@ ZStackFrame* MainWindow::createStackFrame(ZStackDocPtr doc)
   } else {
     emit progressDone();
     if (frame->document()->hasObject()) {
-      frame->open3DWindow();
+      Z3DWindow *win = frame->open3DWindow();
+      win->attachMainWindow(this);
     } else {
       reportFileOpenProblem("the file", "No content is recognized in the file.");
     }

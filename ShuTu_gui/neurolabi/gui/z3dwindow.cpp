@@ -77,6 +77,7 @@
 #include "z3drendererbase.h"
 #include "dialogs/zswcisolationdialog.h"
 #include "dialogs/helpdialog.h"
+#include "mainwindow.h"
 
 class Sleeper : public QThread
 {
@@ -517,13 +518,14 @@ Z3DWindow::Z3DWindow(ZSharedPointer<ZStackDoc> doc, Z3DWindow::EInitMode initMod
   }
 
   m_doc->registerUser(this);
-  //createToolBar();
+  createToolBar();
 
   m_buttonStatus[0] = true;  // showgraph
   m_buttonStatus[1] = false; // settings
   m_buttonStatus[2] = false; // objects
 
   m_cuttingStackBound = false;
+  m_mainWindow = NULL;
 }
 
 Z3DWindow::~Z3DWindow()
@@ -540,6 +542,21 @@ void Z3DWindow::createStatusBar()
 void Z3DWindow::createToolBar()
 {
   m_toolBar = addToolBar("Interaction");
+  m_toolBar->addAction(m_helpAction);
+}
+
+void Z3DWindow::attachMainWindow(MainWindow *mainWin)
+{
+  if (m_mainWindow == NULL) {
+    m_mainWindow = mainWin;
+
+    connect(m_mainWindow, SIGNAL(destroyed()), this, SLOT(detainMainWindow()));
+  }
+}
+
+void Z3DWindow::detainMainWindow()
+{
+  m_mainWindow = NULL;
 }
 
 void Z3DWindow::gotoPosition(double x, double y, double z, double radius)
@@ -898,6 +915,9 @@ void Z3DWindow::createActions()
   m_helpAction = new QAction("Help", this);
   connect(m_helpAction, SIGNAL(triggered()), this, SLOT(help()));
 
+  m_showMainWinAction = new QAction("Stack Window", this);
+  connect(m_showMainWinAction, SIGNAL(triggered()), this, SLOT(showMainWindow()));
+
   m_removeSelectedObjectsAction = new QAction("Delete", this);
   if (NeutubeConfig::getInstance().getApplication() != "Biocytin") {
     connect(m_removeSelectedObjectsAction, SIGNAL(triggered()), this,
@@ -1091,6 +1111,7 @@ void Z3DWindow::createMenus()
 {
   m_viewMenu = menuBar()->addMenu(tr("&View"));
   m_editMenu = menuBar()->addMenu(tr("&Edit"));
+  m_windowMenu = menuBar()->addMenu(tr("&Window"));
   m_helpMenu = menuBar()->addMenu(tr("&Help"));
 
   m_editMenu->addAction(m_undoAction);
@@ -1099,6 +1120,7 @@ void Z3DWindow::createMenus()
   m_editMenu->addAction(m_markSwcSomaAction);
 
   m_helpMenu->addAction(m_helpAction);
+  m_windowMenu->addAction(m_showMainWinAction);
 
   createContextMenu();
   customizeContextMenu();
@@ -1525,6 +1547,14 @@ void Z3DWindow::loadView()
     cameraJson.load(fileName.toStdString());
     getCamera()->get().set(cameraJson);
     getCamera()->updatePara();
+  }
+}
+
+void Z3DWindow::showMainWindow()
+{
+  if (m_mainWindow) {
+    m_mainWindow->showNormal();
+    m_mainWindow->raise();
   }
 }
 
