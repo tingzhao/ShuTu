@@ -160,3 +160,19 @@ void TileManager::closeProject()
   close();
   m_scaleFactor = 100;
 }
+
+void TileManager::on_actionProjection_Window_triggered()
+{
+  show();
+  raise();
+}
+
+void TileManager::on_actionMain_Window_triggered()
+{
+  emit showingMainWindow();
+}
+
+void TileManager::on_action3D_Window_triggered()
+{
+  emit showing3DWindow();
+}

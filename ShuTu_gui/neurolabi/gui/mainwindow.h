@@ -209,6 +209,10 @@ public slots:
   void showStackFrame(
       const QStringList &fileList, bool opening3DWindow = false);
   void createStackFrameFromDocReader(ZStackDocReader *reader);
+
+  void open3DWindow();
+  void openTileManager();
+
 #if defined(_FLYEM_)
   void createDvidFrame();
   void launchSplit(const QString &str);
@@ -489,6 +493,12 @@ private slots:
   void on_actionUp_Down_Flip_triggered();
 
   void on_actionSWC_Edit_Stat_triggered();
+
+  void on_actionProject_Window_triggered();
+
+  void on_action3D_Window_triggered();
+
+  void on_actionStack_Window_triggered();
 
 private:
   void createActions();

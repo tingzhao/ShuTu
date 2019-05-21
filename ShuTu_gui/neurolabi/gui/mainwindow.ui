@@ -428,12 +428,21 @@
     <addaction name="menuFLy_EM"/>
     <addaction name="menuBiocytin"/>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionStack_Window"/>
+    <addaction name="actionProject_Window"/>
+    <addaction name="action3D_Window"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuTools"/>
    <addaction name="menuOptions"/>
    <addaction name="menuApplications"/>
+   <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1476,6 +1485,21 @@
   <action name="actionSWC_Edit_Stat">
    <property name="text">
     <string>SWC Edit Summary</string>
+   </property>
+  </action>
+  <action name="actionProject_Window">
+   <property name="text">
+    <string>Projection Window</string>
+   </property>
+  </action>
+  <action name="action3D_Window">
+   <property name="text">
+    <string>3D Window</string>
+   </property>
+  </action>
+  <action name="actionStack_Window">
+   <property name="text">
+    <string>Stack Window</string>
    </property>
   </action>
  </widget>

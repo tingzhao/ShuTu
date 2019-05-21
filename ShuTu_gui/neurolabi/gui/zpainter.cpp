@@ -584,7 +584,8 @@ void ZPainter::setOpacity(double alpha)
   m_painter.setOpacity(alpha);
 }
 
-void ZPainter::DrawText(QPainter &painter, const QStringList &text)
+void ZPainter::DrawText(
+    QPainter &painter, const QStringList &text, int location)
 {
   if (!text.empty()) {
     int maxLength = 0;
@@ -602,6 +603,8 @@ void ZPainter::DrawText(QPainter &painter, const QStringList &text)
     int height = text.length() * 18;
 
     if (width > 0 && height > 0) {
+      painter.save();
+
       QPixmap pixmap(width, height);
       pixmap.fill(QColor(0, 0, 0, 128));
 
@@ -610,20 +613,49 @@ void ZPainter::DrawText(QPainter &painter, const QStringList &text)
 
       //    bufferPainter.fillRect(pixmap.rect(), QColor(0, 0, 0, 0));
       bufferPainter.drawText(QRectF(10, 1, width, height), compText);
-      painter.save();
+      painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+      int x = 0;
+      int y = 0;
+      int canvasWidth = painter.device()->width();
+      int canvasHeight = painter.device()->height();
+
+      switch (location) {
+      case 0:
+        break;
+      case 1: //right side
+        x = std::max(0, canvasWidth - width);
+        break;
+      case 2: //right bottom
+        x = std::max(0, canvasWidth - width);
+        y = std::max(0, canvasHeight - height);
+        break;
+      case 3: //left bottom
+        y = std::max(0, canvasHeight - height);
+        break;
+      default:
+        break;
+      }
+
+      painter.drawPixmap(x, y, pixmap);
+
+#ifdef _DEBUG_2
       painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
       painter.drawPixmap(0, 0, pixmap);
+      pixmap.save("/Users/zhaot/Work/neutu/neurolabi/data/_test.png");
+#endif
+
       painter.restore();
     }
   }
 }
 
-void ZPainter::DrawText(QPainter &painter, const QString &text)
+void ZPainter::DrawText(
+    QPainter &painter, const QString &text, int location)
 {
   if (!text.isEmpty()) {
     QStringList textList;
     textList.append(text);
-    DrawText(painter, text);
+    DrawText(painter, text, location);
   }
 }
 

@@ -174,6 +174,12 @@ void Z3DCanvas::dropEvent(QDropEvent *event)
   event->ignore();
 }
 
+void Z3DCanvas::updateHint(const QStringList hints)
+{
+  m_hints = hints;
+  viewport()->update();
+}
+
 void Z3DCanvas::drawBackground(QPainter *painter, const QRectF &)
 {
 #ifdef _QT5_
@@ -210,7 +216,15 @@ void Z3DCanvas::drawBackground(QPainter *painter, const QRectF &)
 
   if (m_interaction.getKeyMode() == ZInteractiveContext::KM_SWC_SELECTION) {
     ZPainter::DrawSwcSelectionText(*painter);
+  } else { //Calling drawPixmap twice has a strange problem in Qt
+    ZPainter::DrawText(*painter, m_hints, 3);
   }
+
+#ifdef _DEBUG_2
+  ZPainter::DrawText(*painter, m_hints, 1);
+#endif
+
+//  ZPainter::DrawText(*painter, m_hints, 3);
 #if 0
   QStringList text;
   if (m_interaction.getKeyMode() == ZInteractiveContext::KM_SWC_SELECTION) {

@@ -45,9 +45,12 @@ bool ZTileInfo::loadJsonObject(const ZJsonObject &obj, QString tileFilePath)
     const json_t *value = obj["size"];
     if (ZJsonParser::isArray(value)) {
       if (ZJsonParser::arraySize(value)  == 3) {
-        for (int i = 0; i < 3; ++i) {
-          m_dim[i] = ZJsonParser::integerValue(value, i);
-        }
+        m_dim[1] = ZJsonParser::integerValue(value, 0);
+        m_dim[0] = ZJsonParser::integerValue(value, 1);
+        m_dim[2] = ZJsonParser::integerValue(value, 2);
+//        for (int i = 0; i < 3; ++i) {
+//          m_dim[i] = ZJsonParser::integerValue(value, i);
+//        }
       } else {
         return false;
       }

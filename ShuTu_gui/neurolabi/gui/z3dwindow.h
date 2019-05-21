@@ -289,6 +289,8 @@ public slots:
   void loadView();
 
   void showMainWindow();
+  void showProjectionWindow();
+  void show3DWindow();
 
   void resetCameraClippingRange(); // // Reset the camera clipping range to include this entire bounding box
   // redraw changed parts
@@ -417,6 +419,8 @@ public slots:
 
   void detainMainWindow();
 
+  void updateHint();
+
 
 protected:
   virtual void dragEnterEvent(QDragEnterEvent *event);
@@ -431,6 +435,7 @@ private:
 
   // update menu based on context information
   void updateContextMenu(const QString &group);
+  void updateHint(const QStringList &hints);
 
 private:
   // menu
@@ -473,6 +478,8 @@ private:
   QAction *m_changeSwcNodeSizeAction;
   QAction *m_helpAction;
   QAction *m_showMainWinAction;
+  QAction *m_showProjectionAction;
+  QAction *m_showSelfAction;
 
   QAction *m_refreshTraceMaskAction;
 

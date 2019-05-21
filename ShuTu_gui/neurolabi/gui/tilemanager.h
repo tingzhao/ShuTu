@@ -31,6 +31,10 @@ public:
 public slots:
     void closeProject();
 
+signals:
+    void showing3DWindow();
+    void showingMainWindow();
+
 private slots:
     void ShowContextMenu(const QPoint& pos);
     void on_actionShowSWC_triggered();
@@ -38,6 +42,12 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
     void showSwc(bool on);
     void updateView();
+
+    void on_actionProjection_Window_triggered();
+
+    void on_actionMain_Window_triggered();
+
+    void on_action3D_Window_triggered();
 
 private:
     void init();

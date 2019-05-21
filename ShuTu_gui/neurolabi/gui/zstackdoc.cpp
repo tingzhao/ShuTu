@@ -323,6 +323,7 @@ void ZStackDoc::connectSignalSlot()
           this, SLOT(addObject(ZStackObject*,bool)));
   connect(this, SIGNAL(addingObject(ZStackObject*)),
           this, SLOT(addObject(ZStackObject*)));
+
   /*
   connect(this, SIGNAL(chainModified()), this, SIGNAL(objectModified()));
   connect(this, SIGNAL(punctaModified()), this, SIGNAL(objectModified()));
@@ -5261,6 +5262,8 @@ void ZStackDoc::notifySparseObjectModified()
 void ZStackDoc::notifyStackModified()
 {
   emit stackModified();
+
+  emit dataModified();
 }
 
 void ZStackDoc::notifySparseStackModified()
@@ -5538,6 +5541,8 @@ void ZStackDoc::notifyObjectModified(ZStackObject::EType type)
   setSaved(type, false);
 
   customNotifyObjectModified(type);
+
+  emit dataModified();
 }
 
 

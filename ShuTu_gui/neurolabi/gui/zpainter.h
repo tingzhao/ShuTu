@@ -157,8 +157,8 @@ public:
   bool isVisible(const QRect &rect) const;
 #endif
 
-  static void DrawText(QPainter &painter, const QString &text);
-  static void DrawText(QPainter &painter, const QStringList &text);
+  static void DrawText(QPainter &painter, const QString &text, int location = 0);
+  static void DrawText(QPainter &painter, const QStringList &text, int location = 0);
   static void DrawSwcSelectionText(QPainter &painter);
 
   static QStringList GetSwcSelectionText();

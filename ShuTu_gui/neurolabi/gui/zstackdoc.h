@@ -1124,6 +1124,7 @@ signals:
   void objectModified();
   void objectModified(ZStackObject::ETarget);
   void objectModified(QSet<ZStackObject::ETarget>);
+  void dataModified();
 
   void stackTargetModified();
   void swcNetworkModified();

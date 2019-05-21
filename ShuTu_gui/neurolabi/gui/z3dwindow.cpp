@@ -692,6 +692,8 @@ void Z3DWindow::init(EInitMode mode)
           m_swcFilter, SLOT(updateSwcVisibleState()));
   connect(getDocument(), SIGNAL(stackBoundBoxChanged()),
           this, SLOT(updateCuttingBox()));
+  connect(getDocument(), SIGNAL(dataModified()),
+          this, SLOT(updateHint()));
   connect(m_punctaFilter->getRendererBase(), SIGNAL(coordScalesChanged()),
           this, SLOT(punctaCoordScaleChanged()));
   connect(m_swcFilter->getRendererBase(), SIGNAL(coordScalesChanged()),
@@ -918,6 +920,14 @@ void Z3DWindow::createActions()
   m_showMainWinAction = new QAction("Stack Window", this);
   connect(m_showMainWinAction, SIGNAL(triggered()), this, SLOT(showMainWindow()));
 
+  m_showProjectionAction = new QAction("Projection Window", this);
+  connect(m_showProjectionAction, SIGNAL(triggered()),
+          this, SLOT(showProjectionWindow()));
+
+  m_showSelfAction = new QAction("3D Window", this);
+  connect(m_showSelfAction, SIGNAL(triggered()),
+          this, SLOT(show3DWindow()));
+
   m_removeSelectedObjectsAction = new QAction("Delete", this);
   if (NeutubeConfig::getInstance().getApplication() != "Biocytin") {
     connect(m_removeSelectedObjectsAction, SIGNAL(triggered()), this,
@@ -1121,6 +1131,8 @@ void Z3DWindow::createMenus()
 
   m_helpMenu->addAction(m_helpAction);
   m_windowMenu->addAction(m_showMainWinAction);
+  m_windowMenu->addAction(m_showProjectionAction);
+  m_windowMenu->addAction(m_showSelfAction);
 
   createContextMenu();
   customizeContextMenu();
@@ -1556,6 +1568,19 @@ void Z3DWindow::showMainWindow()
     m_mainWindow->showNormal();
     m_mainWindow->raise();
   }
+}
+
+void Z3DWindow::showProjectionWindow()
+{
+  if (m_mainWindow) {
+    m_mainWindow->openTileManager();
+  }
+}
+
+void Z3DWindow::show3DWindow()
+{
+  show();
+  raise();
 }
 
 bool Z3DWindow::hasRectRoi() const
@@ -3883,6 +3908,21 @@ bool Z3DWindow::hasSelectedSwcNode() const
 bool Z3DWindow::hasMultipleSelectedSwcNode() const
 {
   return m_doc->hasMultipleSelectedSwcNode();
+}
+
+void Z3DWindow::updateHint()
+{
+  if (getDocument()->hasSwc()) {
+    updateHint(
+          QStringList() <<
+          "Hot keys: [^G] Change model visualization; [^S] Save reconstruction; "
+          "[H] Turn on selection mode; ");
+  }
+}
+
+void Z3DWindow::updateHint(const QStringList &hints)
+{
+  getCanvas()->updateHint(hints);
 }
 
 void Z3DWindow::notifyUser(const QString &message)

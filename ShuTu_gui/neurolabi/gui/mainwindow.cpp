@@ -402,6 +402,9 @@ void MainWindow::initDialog()
   //m_dvidObjectDlg->setAddress(m_dvidClient->getDvidTarget().getDvid);
 
   m_tileDlg = new TileManager(this);
+  connect(m_tileDlg, SIGNAL(showing3DWindow()), this, SLOT(open3DWindow()));
+  connect(m_tileDlg, SIGNAL(showingMainWindow()),
+          this, SLOT(on_actionStack_Window_triggered()));
 
 #if defined(_FLYEM_)
     m_dvidDlg = ZDialogFactory::makeDvidDialog(this);
@@ -2272,6 +2275,23 @@ void MainWindow::checkVersion()
     getSettings().setValue("version", m_version);
   }
 #endif
+}
+
+void MainWindow::open3DWindow()
+{
+  ZStackFrame *frame = activeStackFrame();
+  if (frame) {
+    frame->openDefault3DWindow();
+  }
+}
+
+void MainWindow::openTileManager()
+{
+  ZStackFrame *frame = activeStackFrame();
+  if (frame) {
+    m_tileDlg->show();
+    m_tileDlg->raise();
+  }
 }
 
 void MainWindow::readSettings()
@@ -6721,6 +6741,7 @@ ZStackFrame* MainWindow::createStackFrame(ZStackDocPtr doc)
     if (frame->document()->hasObject()) {
       Z3DWindow *win = frame->open3DWindow();
       win->attachMainWindow(this);
+      win->updateHint();
     } else {
       reportFileOpenProblem("the file", "No content is recognized in the file.");
     }
@@ -7710,4 +7731,20 @@ void MainWindow::MessageProcessor::processMessage(
       break;
     }
   }
+}
+
+void MainWindow::on_actionProject_Window_triggered()
+{
+  openTileManager();
+}
+
+void MainWindow::on_action3D_Window_triggered()
+{
+  open3DWindow();
+}
+
+void MainWindow::on_actionStack_Window_triggered()
+{
+  show();
+  raise();
 }

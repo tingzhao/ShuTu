@@ -36,8 +36,32 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionMain_Window"/>
+    <addaction name="actionProjection_Window"/>
+    <addaction name="action3D_Window"/>
+   </widget>
+   <addaction name="menuWindow"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionMain_Window">
+   <property name="text">
+    <string>Stack Window</string>
+   </property>
+  </action>
+  <action name="action3D_Window">
+   <property name="text">
+    <string>3D Window</string>
+   </property>
+  </action>
+  <action name="actionProjection_Window">
+   <property name="text">
+    <string>Projection Window</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

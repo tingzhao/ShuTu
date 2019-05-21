@@ -1281,6 +1281,18 @@ void ZStackFrame::showObject()
   presenter()->setObjectVisible(true);
 }
 
+Z3DWindow* ZStackFrame::openDefault3DWindow()
+{
+  if (document()->getTag() == NeuTube::Document::BIOCYTIN_STACK ||
+      document()->getTag() == NeuTube::Document::BIOCYTIN_PROJECTION) {
+    return open3DWindow(Z3DWindow::INIT_EXCLUDE_VOLUME);
+  } else {
+    return open3DWindow();
+  }
+
+  return NULL;
+}
+
 Z3DWindow* ZStackFrame::open3DWindow(Z3DWindow::EInitMode mode)
 {
   if (Z3DApplication::app() == NULL) {
@@ -1817,12 +1829,7 @@ void ZStackFrame::MessageProcessor::processMessage(
   {
     ZStackFrame *frame = qobject_cast<ZStackFrame*>(host);
     if (frame != NULL) {
-      if (frame->document()->getTag() == NeuTube::Document::BIOCYTIN_STACK ||
-          frame->document()->getTag() == NeuTube::Document::BIOCYTIN_PROJECTION) {
-        frame->open3DWindow(Z3DWindow::INIT_EXCLUDE_VOLUME);
-      } else {
-        frame->open3DWindow();
-      }
+      frame->openDefault3DWindow();
     }
     message->deactivate();
   }

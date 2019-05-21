@@ -130,6 +130,11 @@ Z3DRendererBase::Z3DRendererBase(QObject *parent)
   m_sizeScale.setSingleStep(0.1);
   m_sizeScale.setDecimal(1);
 
+  m_coordZScale.setSingleStep(0.1);
+  m_coordZScale.setDecimal(2);
+
+  m_opacity.setDecimal(2);
+
   addParameter(m_coordXScale);
   addParameter(m_coordYScale);
   addParameter(m_coordZScale);

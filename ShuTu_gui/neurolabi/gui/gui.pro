@@ -603,7 +603,8 @@ HEADERS += mainwindow.h \
 #    flyem/zflyemtodolist.h \
 #    dvid/zdvidannotation.h \
     dialogs/stringlistdialog.h \
-    dialogs/zswcisolationdialog.h
+    dialogs/zswcisolationdialog.h \
+    zwindowcontroller.h
 
 FORMS += dialogs/settingdialog.ui \
     dialogs/frameinfodialog.ui \
@@ -1063,7 +1064,8 @@ SOURCES += main.cpp \
 #    flyem/zflyemtodolist.cpp \
 #    dvid/zdvidannotation.cpp \
     dialogs/stringlistdialog.cpp \
-    dialogs/zswcisolationdialog.cpp
+    dialogs/zswcisolationdialog.cpp \
+    zwindowcontroller.cpp
 
 
 OTHER_FILES += \

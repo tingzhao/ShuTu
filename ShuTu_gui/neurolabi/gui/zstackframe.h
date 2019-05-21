@@ -158,6 +158,8 @@ public:
   void showObject();
 
   Z3DWindow* open3DWindow(Z3DWindow::EInitMode mode = Z3DWindow::INIT_NORMAL);
+  Z3DWindow* openDefault3DWindow();
+
   /*!
    * \brief Get the main window ancestor of the frame.
    */

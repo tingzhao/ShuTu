@@ -116,6 +116,8 @@ public:
     return getInteractionEngine()->getInteractiveContext();
   }
 
+  void updateHint(const QStringList hints);
+
 signals:
   // w and h is physical size not logical size, opengl works in physical pixel
   void canvasSizeChanged(int w, int h);
@@ -142,6 +144,8 @@ protected:
   Z3DNetworkEvaluator* m_networkEvaluator;
   bool m_isStereoScene;
   bool m_fakeStereoOnce;
+
+  QStringList m_hints;
 
 private:
   ZInteractionEngine m_interaction;
