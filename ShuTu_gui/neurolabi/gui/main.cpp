@@ -230,8 +230,10 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
+#if defined _QT5_
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
+#endif
 
     MainWindow::createWorkDir();
 
