@@ -25,7 +25,7 @@ ZTileManager::ZTileManager(QObject *parent) : QGraphicsScene(parent),
 {
 //    scaleFactor = 1.0;
     getParentFrame()->setTileManager(this);
-    m_resolution.set(1, 1, 8, 'p'); //default setup for biocytin data
+    m_resolution.set(1, 1, 2, 'p'); //default setup for biocytin data
 }
 
 ZTileManager::~ZTileManager()

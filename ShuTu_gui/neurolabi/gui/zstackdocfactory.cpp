@@ -35,8 +35,9 @@ ZSharedPointer<ZStackDoc> ZStackDocFactory::Make(NeuTube::Document::ETag tag)
   }
 
   doc->setTag(tag);
+
   if (tag == NeuTube::Document::BIOCYTIN_STACK) {
-    doc->setResolution(1, 1, 8, 'p');
+    doc->setResolution(1, 1, 2, 'p');
     doc->setStackBackground(NeuTube::IMAGE_BACKGROUND_BRIGHT);
   }
 
